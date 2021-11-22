@@ -1,4 +1,12 @@
+import { tvApi } from "./api";
+import Footer from "./components/footer";
+import Contents from "./components/content";
 function App() {
-  return <div>Our Web dev Project</div>;
+  return (
+    <>
+      <Contents />
+      <Footer />
+    </>
+  );
 }
 export default App;
