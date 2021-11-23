@@ -52,9 +52,7 @@ const Home = () => {
 
   return (
     <>
-      <div>
-        {console.log("pop")}
-        {console.log(popularTV)}
+      <div className="home-container">
         {nowPlaying && nowPlaying.length > 0 && (
           <Section title="Now Playing">
             {nowPlaying.map((movie) => (
