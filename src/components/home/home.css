@@ -3,8 +3,16 @@
 }
 
 .poster-imgcontainer {
-    margin-bottom: 5px;
-    position: relative;
+  margin-bottom: 5px;
+  position: relative;
+}
+
+.poster-imgcontainer:hover > .poster-img {
+  opacity: 0.3;
+}
+
+.poster-imgcontainer:hover > .poster-rating {
+  opacity: 1;
 }
 
 .poster-img {

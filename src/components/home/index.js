@@ -2,15 +2,18 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "./home.css";
 import { moviesApi, tvApi } from "../../api";
+import popcorn from "../../assets/noPosterSmall.png";
 
 const Home = () => {
   const [nowPlaying, setNowPlaying] = useState();
   const [popular, setPopular] = useState();
   const [error, setError] = useState();
   const [loading, setLoading] = useState();
+  const [popularTV, setPopularTV] = useState();
+  const [topRated, setTopRated] = useState();
 
   useEffect(() => {
-    async function fetchApi() {
+    async function fetchMovieApi() {
       try {
         const {
           data: { results: nowPlaying },
@@ -26,12 +29,32 @@ const Home = () => {
         setLoading(false);
       }
     }
-    fetchApi();
+
+    async function fetchTVApi() {
+      try {
+        const {
+          data: { results: topRated },
+        } = await tvApi.topRated();
+        const {
+          data: { results: popularTV },
+        } = await tvApi.popular();
+        setTopRated(topRated);
+        setPopularTV(popularTV);
+      } catch {
+        setError("Can't find movie information.");
+      } finally {
+        setLoading(false);
+      }
+    }
+    fetchMovieApi();
+    fetchTVApi();
   }, []);
 
   return (
     <>
       <div>
+        {console.log("pop")}
+        {console.log(popularTV)}
         {nowPlaying && nowPlaying.length > 0 && (
           <Section title="Now Playing">
             {nowPlaying.map((movie) => (
@@ -62,6 +85,34 @@ const Home = () => {
             ))}
           </Section>
         )}
+        {topRated && topRated.length > 0 && (
+          <Section title="Top Rated Shows">
+            {topRated.map((show) => (
+              <Poster
+                key={show.id}
+                id={show.id}
+                imageUrl={show.poster_path}
+                title={show.original_name}
+                rating={show.vote_average}
+                year={show.first_air_date.substring(0, 4)}
+              />
+            ))}
+          </Section>
+        )}
+        {popularTV && popularTV.length > 0 && (
+          <Section title="Popular Shows">
+            {popularTV.map((show) => (
+              <Poster
+                key={show.id}
+                id={show.id}
+                imageUrl={show.poster_path}
+                title={show.original_name}
+                rating={show.vote_average}
+                year={show.first_air_date.substring(0, 4)}
+              />
+            ))}
+          </Section>
+        )}
       </div>
     </>
   );
@@ -79,7 +130,6 @@ const Section = ({ title, children }) => {
 const Poster = ({ id, imageUrl, title, rating, year, isMovie = false }) => {
   return (
     <Link to={isMovie ? `/movie/${id}` : `/show/${id}`}>
-      {console.log(imageUrl)}
       <div className="poster-container">
         <div className="poster-imgcontainer">
           <div
@@ -87,7 +137,7 @@ const Poster = ({ id, imageUrl, title, rating, year, isMovie = false }) => {
             style={{
               backgroundImage: imageUrl
                 ? `url(https://image.tmdb.org/t/p/w300${imageUrl})`
-                : require("../../assets/noPosterSmall.png"),
+                : `url(${popcorn})`,
             }}
           />
           <span className="poster-rating">
