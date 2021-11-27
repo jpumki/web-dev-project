@@ -23,6 +23,12 @@ export const moviesApi = {
         append_to_response: "videos",
       },
     }),
+  movieVideo: (id) =>
+    api.get(`movie/${id}/videos`, {
+      params: {
+        append_to_response: "videos",
+      },
+    }),
 };
 
 export const tvApi = {
@@ -36,6 +42,12 @@ export const tvApi = {
     }),
   showDetail: (id) =>
     api.get(`tv/${id}`, {
+      params: {
+        append_to_response: "videos",
+      },
+    }),
+  tvVideo: (id) =>
+    api.get(`tv/${id}/videos`, {
       params: {
         append_to_response: "videos",
       },

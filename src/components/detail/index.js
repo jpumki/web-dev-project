@@ -8,6 +8,7 @@ const Detail = () => {
   const [isMovie, setIsMovie] = useState(
     window.location.pathname.includes("/movie/")
   );
+  const [video, setVideo] = useState();
   const [error, setError] = useState();
   const [loading, setLoading] = useState();
 
@@ -19,13 +20,25 @@ const Detail = () => {
       //   window.location.href = "/";
       // }
       let result = null;
+      let video = null;
       try {
         if (isMovie) {
-          ({ data: result } = await moviesApi.movieDetail(parsedId));
+          const detailRequest = await moviesApi.movieDetail(parsedId);
+          result = detailRequest.data;
+          setResult(result);
+          const videoRequest = await moviesApi.movieVideo(parsedId);
+          video = videoRequest.data;
+          debugger;
+          setVideo(video);
         } else {
-          ({ data: result } = await tvApi.showDetail(parsedId));
+          const detailRequest = await tvApi.showDetail(parsedId);
+          result = detailRequest.data;
+          setResult(result);
+          const videoRequest = await tvApi.tvVideo(parsedId);
+          video = videoRequest.data;
+          debugger;
+          setVideo(video);
         }
-        setResult(result);
       } catch {
         setError("Can't find anything.");
       } finally {
@@ -88,6 +101,21 @@ const Detail = () => {
               </span>
             </div>
             <p className="detail-overview">{result.overview}</p>
+            <div className="pt-4">
+              {video.results.length > 0 && (
+                <div className="video-responsive">
+                  <iframe
+                    width="560"
+                    height="315"
+                    src={`https://www.youtube.com/embed/${video.results[0].key}`}
+                    title="YouTube video player"
+                    frameborder="0"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                    allowfullscreen
+                  />
+                </div>
+              )}
+            </div>
           </div>
         </div>
       </div>
