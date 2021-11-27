@@ -1,7 +1,6 @@
 const Footer = () => {
   return (
     <div>
-      <div>This is Footer</div>
       <div>CopyRight &copy; 2021 Kathy Sha and Junho Park, All Right Reserved</div>
     </div>
   );
