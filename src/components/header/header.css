@@ -25,6 +25,14 @@ li {
   transition: border-bottom 0.5s ease-in-out;
 }
 
+button {
+  width: 80px;
+  height: 35px;
+  text-align: center;
+  /* border-bottom: 4px solid
+    ${(props) => (props.current ? "#c0392b" : "transparent")}; */
+  transition: border-bottom 0.5s ease-in-out;
+}
 .header-link {
   height: 50px;
   display: flex;

@@ -1,4 +1,4 @@
-Style Reset
+/* Style Reset */
 html,
 body,
 div,
@@ -140,3 +140,13 @@ body {
   color: white;
   padding-top: 50px;
 }
+
+.cursor-pointer {
+  cursor: pointer;
+}
+
+/* .btn-primary {
+  color: #fff;
+  background-color: #e50914;
+  border-color: #e50914;
+} */

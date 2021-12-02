@@ -4,6 +4,7 @@ import Search from "../search";
 import Home from "../home";
 import Detail from "../detail"
 import Profile from "../profile";
+import Login from "../login";
 const Contents = () => {
   return (
     <Router>
@@ -13,6 +14,7 @@ const Contents = () => {
           <Route path="/" element={<Home />} />
           <Route path="/home" element={<Home />} />
           <Route path="/search" element={<Search />} />
+          <Route path="/login" element={<Login />} />
           <Route path="/movie/:id" element={<Detail />} />
           <Route path="/show/:id" element={<Detail />} />
           <Route path="/profile/:id" element={<Profile />} />
