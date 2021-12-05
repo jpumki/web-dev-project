@@ -7,8 +7,7 @@ import {
   createUserWithEmailAndPassword,
 } from "firebase/auth";
 import firebaseApp from "../../firebase/firebase";
-const Login = () => {
-  const auth = getAuth(firebaseApp);
+const Login = ({auth}) => {
   const [isLoggin, setIsLoggin] = useState(false);
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
@@ -148,7 +147,7 @@ const SignIn = ({ auth }) => {
             required
             onChange={onChange}
           />
-          {error && <div>Error Occured</div>}
+          {error && <div>Email already exist</div>}
           <div>
             <input
               className=" btn btn-danger mt-3 mb-2 d-flex justify-content-center align-items-center"

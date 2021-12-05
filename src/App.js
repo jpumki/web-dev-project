@@ -1,4 +1,3 @@
-import { tvApi } from "./api";
 import Footer from "./components/footer";
 import Contents from "./components/content";
 function App() {
