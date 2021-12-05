@@ -7,7 +7,7 @@ import {
   createUserWithEmailAndPassword,
 } from "firebase/auth";
 import firebaseApp from "../../firebase/firebase";
-const Login = ({auth}) => {
+const Login = ({ auth }) => {
   const [isLoggin, setIsLoggin] = useState(false);
   useEffect(() => {
     auth.onAuthStateChanged((user) => {
@@ -72,6 +72,12 @@ const SignIn = ({ auth }) => {
     setPassword("");
   };
 
+  const goLogin = () => {
+    setLogin(true);
+    setEmail("");
+    setPassword("");
+  };
+
   const onSignUp = async (event) => {
     event.preventDefault();
     try {
@@ -126,6 +132,7 @@ const SignIn = ({ auth }) => {
         </div>
       ) : (
         <form onSubmit={onSignUp}>
+          <div onClick={goLogin}>{`<- Back to Login`}</div>
           <h1 className="login-h1">Sign Up</h1>
           <div className="login-label">User name </div>
           <input
