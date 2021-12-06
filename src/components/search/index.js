@@ -10,10 +10,28 @@ const Search = () => {
   const [loading, setLoading] = useState();
   const [error, setError] = useState();
 
+  async function searchByTerm() {
+    setLoading(true);
+    try {
+      const {
+        data: { results: movieResults },
+      } = await moviesApi.search(search);
+      const {
+        data: { results: tvResults },
+      } = await tvApi.search(search);
+      setMovieResults(movieResults);
+      setTVResults(tvResults);
+    } catch {
+      setError("Can't find results.");
+    } finally {
+      setLoading(false);
+    }
+  }
+
   const handleSubmit = (event) => {
     event.preventDefault();
     if (search !== "") {
-      setSearch();
+      searchByTerm();
     }
   };
 
@@ -23,27 +41,6 @@ const Search = () => {
     } = event;
     setSearch(value);
   };
-
-  useEffect(() => {
-    async function searchByTerm() {
-      setLoading(true);
-      try {
-        const {
-          data: { results: movieResults },
-        } = await moviesApi.search(search);
-        const {
-          data: { results: tvResults },
-        } = await tvApi.search(search);
-        setMovieResults(movieResults);
-        setTVResults(tvResults);
-      } catch {
-        setError("Can't find results.");
-      } finally {
-        setLoading(false);
-      }
-    }
-    searchByTerm();
-  }, []);
 
   return (
     <div>

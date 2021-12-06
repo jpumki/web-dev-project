@@ -2,11 +2,9 @@ import React, { useState, useEffect } from "react";
 import wallpaper from "../../assets/wallpaper.png";
 import "./login.css";
 import {
-  getAuth,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
 } from "firebase/auth";
-import firebaseApp from "../../firebase/firebase";
 const Login = ({ auth }) => {
   const [isLoggin, setIsLoggin] = useState(false);
   useEffect(() => {
@@ -42,8 +40,12 @@ const Login = ({ auth }) => {
 const SignIn = ({ auth }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [name, setName] = useState("");
   const [login, setLogin] = useState(true);
   const [error, setError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+  const [role, setRole] = useState(1);
 
   const onChange = (event) => {
     const {
@@ -54,6 +56,10 @@ const SignIn = ({ auth }) => {
       setEmail(value);
     } else if (name == "password") {
       setPassword(value);
+    } else if (name == "name") {
+      setName(value);
+    } else if (name == "confirmPassword") {
+      setConfirmPassword(value);
     }
   };
 
@@ -66,24 +72,40 @@ const SignIn = ({ auth }) => {
     }
   };
 
-  const goSignUp = () => {
-    setLogin(false);
+  const initState = () => {
     setEmail("");
     setPassword("");
+    setName("");
+    setConfirmPassword("");
+    setError(false);
+    setErrorMessage("");
+    setRole(1);
+  };
+
+  const goSignUp = () => {
+    setLogin(false);
+    initState();
   };
 
   const goLogin = () => {
     setLogin(true);
-    setEmail("");
-    setPassword("");
+    initState();
   };
 
   const onSignUp = async (event) => {
     event.preventDefault();
-    try {
-      await createUserWithEmailAndPassword(auth, email, password);
-      setLogin(true);
-    } catch (error) {
+    if (confirmPassword === password) {
+      try {
+        await createUserWithEmailAndPassword(auth, email, password).then(
+          () => {}
+        );
+        setLogin(true);
+      } catch (error) {
+        setErrorMessage("Email already exist");
+        setError(true);
+      }
+    } else {
+      setErrorMessage("Passwords are not matching");
       setError(true);
     }
   };
@@ -94,7 +116,7 @@ const SignIn = ({ auth }) => {
         <div>
           <form onSubmit={onLogin}>
             <h1 className="login-h1">Sign In</h1>
-            <div className="login-label">User name </div>
+            <div className="login-label">User Email</div>
             <input
               name="email"
               type="email"
@@ -126,15 +148,31 @@ const SignIn = ({ auth }) => {
           <div className="mt-3">
             New to the site?{" "}
             <a className="text-underline cursor-pointer" onClick={goSignUp}>
+              {"  "}
               <u>Sign up here</u>
             </a>
           </div>
         </div>
       ) : (
         <form onSubmit={onSignUp}>
-          <div onClick={goLogin}>{`<- Back to Login`}</div>
+          <div
+            className="cursor-pointer"
+            onClick={goLogin}
+          >{`<- Back to Login`}</div>
           <h1 className="login-h1">Sign Up</h1>
-          <div className="login-label">User name </div>
+
+          <div className="login-label">Name</div>
+          <input
+            name="name"
+            type="text"
+            value={name}
+            className="login-input"
+            placeholder="Name"
+            required
+            onChange={onChange}
+          />
+
+          <div className="login-label">User Email </div>
           <input
             name="email"
             type="email"
@@ -144,6 +182,7 @@ const SignIn = ({ auth }) => {
             required
             onChange={onChange}
           />
+
           <div className="login-label">Password</div>
           <input
             name="password"
@@ -154,7 +193,35 @@ const SignIn = ({ auth }) => {
             required
             onChange={onChange}
           />
-          {error && <div>Email already exist</div>}
+
+          <div className="login-label">Confirm Password</div>
+          <input
+            name="confirmPassword"
+            value={confirmPassword}
+            className="login-input"
+            type="password"
+            placeholder="Password"
+            required
+            onChange={onChange}
+          />
+
+          <div className="login-label">Choose Your Role</div>
+
+          <div class="select">
+            <select
+              onChange={(e) => {
+                console.log(e.target.value);
+                setRole(e.target.value);
+              }}
+            >
+              <option value="1">Student</option>
+              <option value="2">Professor</option>
+              <option value="3">Reviewer</option>
+            </select>
+          </div>
+
+          {error && <div className="pt-2 error-message">{errorMessage}</div>}
+
           <div>
             <input
               className=" btn btn-danger mt-3 mb-2 d-flex justify-content-center align-items-center"
