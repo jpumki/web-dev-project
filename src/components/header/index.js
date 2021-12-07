@@ -6,6 +6,11 @@ const Header = ({ auth }) => {
   const [isLoggin, setIsLoggin] = useState(false);
   const [user, setUser] = useState();
   const [init, setInit] = useState(false);
+
+  const onLogOutClick = () => {
+    auth.signOut();
+  };
+
   useEffect(() => {
     async function userInfo() {
       await auth.onAuthStateChanged((user) => {
@@ -13,7 +18,6 @@ const Header = ({ auth }) => {
           setIsLoggin(true);
           setUser(user);
           setInit(true);
-   
         } else {
           setIsLoggin(false);
         }
@@ -45,11 +49,20 @@ const Header = ({ auth }) => {
           </div>
         ) : (
           <div className="w-100 d-flex align-items-center justify-content-end ">
-            {init && <Link className="header-link " to={`/profile/${user.uid}`}>
-              <div className="mx-3 d-flex align-items-center justify-content-center">
-                Profile
-              </div>
-            </Link>}
+            {init && (
+              <>
+                <Link className="header-link " to={`/profile/${user.uid}`}>
+                  <div className="mx-3 d-flex align-items-center justify-content-center">
+                    Profile
+                  </div>
+                </Link>
+                <div className="col-1 mx-2" onClick={onLogOutClick}>
+                  <button className="btn btn-danger w-100 d-flex justify-content-center align-items-center">
+                    Sign Out
+                  </button>
+                </div>
+              </>
+            )}
           </div>
         )}
       </ul>

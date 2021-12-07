@@ -6,6 +6,7 @@ import {
   createUserWithEmailAndPassword,
 } from "firebase/auth";
 import firebaseApp from "../../firebase/firebase";
+import service from "../../service/service";
 const Login = ({ auth }) => {
   const [isLoggin, setIsLoggin] = useState(false);
   useEffect(() => {
@@ -47,6 +48,10 @@ const SignIn = ({ auth }) => {
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [role, setRole] = useState(1);
+
+  const createProfile = () => {
+    service.createProfile({ name: name });
+  };
 
   const onChange = (event) => {
     const {
@@ -102,8 +107,9 @@ const SignIn = ({ auth }) => {
       } else {
         try {
           await createUserWithEmailAndPassword(auth, email, password).then(
-            (user) => {
-              console.log(user);
+            () => {
+              createProfile();
+              console.log("done");
             }
           );
         } catch (error) {
