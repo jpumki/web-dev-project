@@ -103,7 +103,7 @@ const SignIn = ({ auth }) => {
         try {
           await createUserWithEmailAndPassword(auth, email, password).then(
             (user) => {
-              var user = firebaseApp.auth().currentUser.user;
+              console.log(user);
             }
           );
         } catch (error) {
