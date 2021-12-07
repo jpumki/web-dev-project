@@ -1,5 +1,5 @@
 import "./profile.css";
-const Profile = () => {
+const Profile = ({auth}) => {
   return (
     <div>
       <div>

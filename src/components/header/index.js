@@ -4,17 +4,26 @@ import "./header.css";
 
 const Header = ({ auth }) => {
   const [isLoggin, setIsLoggin] = useState(false);
+  const [user, setUser] = useState();
+  const [init, setInit] = useState(false);
   useEffect(() => {
-    auth.onAuthStateChanged((user) => {
-      if (user) {
-        setIsLoggin(true);
-      } else {
-        setIsLoggin(false);
-      }
-    });
+    async function userInfo() {
+      await auth.onAuthStateChanged((user) => {
+        if (user) {
+          setIsLoggin(true);
+          setUser(user);
+          setInit(true);
+   
+        } else {
+          setIsLoggin(false);
+        }
+      });
+    }
+    userInfo();
   }, []);
   return (
     <header>
+      {console.log(user)}
       <ul className="d-flex w-100">
         <li>
           <Link className="header-link" to="/">
@@ -36,11 +45,11 @@ const Header = ({ auth }) => {
           </div>
         ) : (
           <div className="w-100 d-flex align-items-center justify-content-end ">
-            <Link className="header-link " to="/profile">
+            {init && <Link className="header-link " to={`/profile/${user.uid}`}>
               <div className="mx-3 d-flex align-items-center justify-content-center">
                 Profile
               </div>
-            </Link>
+            </Link>}
           </div>
         )}
       </ul>

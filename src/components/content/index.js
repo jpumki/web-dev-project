@@ -20,7 +20,7 @@ const Contents = () => {
           <Route path="/login" element={<Login auth={auth} />} />
           <Route path="/movie/:id" element={<Detail />} />
           <Route path="/show/:id" element={<Detail />} />
-          <Route path="/profile/:id" element={<Profile />} />
+          <Route path="/profile/:id" element={<Profile  auth={auth} />} />
         </Routes>
       </>
     </Router>
