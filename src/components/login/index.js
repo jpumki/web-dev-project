@@ -95,14 +95,19 @@ const SignIn = ({ auth }) => {
   const onSignUp = async (event) => {
     event.preventDefault();
     if (confirmPassword === password) {
-      try {
-        await createUserWithEmailAndPassword(auth, email, password).then(
-          () => {}
-        );
-        setLogin(true);
-      } catch (error) {
-        setErrorMessage("Email already exist");
+      if (password.length < 6) {
+        setErrorMessage("Passwords must be more than 6 characters");
         setError(true);
+      } else {
+        try {
+          debugger;
+          const h = await createUserWithEmailAndPassword(auth, email, password);
+          console.log(h);
+          setLogin(true);
+        } catch (error) {
+          setErrorMessage("Email already exist");
+          setError(true);
+        }
       }
     } else {
       setErrorMessage("Passwords are not matching");

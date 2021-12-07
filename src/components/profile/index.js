@@ -1,5 +1,16 @@
+import React, { useEffect } from "react";
 import "./profile.css";
-const Profile = ({auth}) => {
+const Profile = ({ auth }) => {
+  useEffect(() => {
+    async function userInfo() {
+      await auth.onAuthStateChanged((user) => {
+        if (!user) {
+          window.location.href = "/";
+        }
+      });
+    }
+    userInfo();
+  }, []);
   return (
     <div>
       <div>
