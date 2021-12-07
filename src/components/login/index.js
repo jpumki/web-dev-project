@@ -5,6 +5,7 @@ import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
 } from "firebase/auth";
+import firebaseApp from "../../firebase/firebase";
 const Login = ({ auth }) => {
   const [isLoggin, setIsLoggin] = useState(false);
   useEffect(() => {
@@ -100,10 +101,11 @@ const SignIn = ({ auth }) => {
         setError(true);
       } else {
         try {
-          debugger;
-          const h = await createUserWithEmailAndPassword(auth, email, password);
-          console.log(h);
-          setLogin(true);
+          await createUserWithEmailAndPassword(auth, email, password).then(
+            (user) => {
+              var user = firebaseApp.auth().currentUser.user;
+            }
+          );
         } catch (error) {
           setErrorMessage("Email already exist");
           setError(true);
