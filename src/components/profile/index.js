@@ -5,34 +5,71 @@ import { useParams } from "react-router-dom";
 import popcorn from "../../assets/noPosterSmall.png";
 const Profile = ({ auth }) => {
   const [profile, setProfile] = useState();
-  const [init, setInit] = useState(false);
-  const [user, setUSer] = useState();
+  const [initProfile, setInitProfile] = useState(false);
+  const [initUser, setInitUser] = useState(false);
+  const [user, setUser] = useState();
   const [follow, setFollow] = useState(false);
   const [index, setIndex] = useState();
 
-  const findProfileById = (id) => {
+  const findProfileById = (id, uid) => {
     service.findProfileById(id).then((profile) => {
       if (profile === null) {
         window.location.href = "/";
       } else {
         setProfile(profile);
+        debugger;
         if (profile.followers.length > 0) {
           for (var i = 0; i < profile.followers.length; i++) {
-            if (profile.followers[i].id == user._id) {
+            if (profile.followers[i].id == uid) {
               setFollow(true);
               setIndex(i);
             }
           }
         }
-        setInit(true);
+        setInitProfile(true);
+      }
+    });
+  };
+
+  const findUserById = (uid) => {
+    service.findProfileById(uid).then((user) => {
+      if (user === null) {
+        window.location.href = "/";
+      } else {
+        setUser(user);
+        setInitUser(true);
       }
     });
   };
 
   const { id } = useParams();
 
-  const followHandler = () => {
+  const onClickFollow = () => {
+    
+    const newProfile = profile;
+    const newFollower = {
+      id: user._id,
+      name: user.name,
+    };
+    newProfile.followers.push(newFollower);
+    service.handleFollower(newProfile);
+    
+    const newUser = user;
+    const newFollowing = {
+      id: profile._id,
+      name: profile.name,
+    };
+    newUser.followings.push(newFollowing);
+    service.handleFollowing(newUser);
+
     setFollow(true);
+  };
+
+  const onClickUnFollow = () => {
+    const newProfile = profile;
+    newProfile.followers.splice(index, 1);
+    service.handleFilm(newProfile);
+    setFollow(false);
   };
 
   useEffect(() => {
@@ -41,8 +78,8 @@ const Profile = ({ auth }) => {
         if (!user) {
           window.location.href = "/";
         } else {
-          findProfileById(id);
-          setUSer(user);
+          findUserById(user.uid);
+          findProfileById(id, user.uid);
         }
       });
     }
@@ -51,8 +88,9 @@ const Profile = ({ auth }) => {
 
   return (
     <div style={{ margin: "60px" }}>
-      {init && (
+      {initProfile && initUser && (
         <>
+          {console.log(profile)}
           <div>
             <div className="d-flex align-items-baseline">
               <img
@@ -71,13 +109,28 @@ const Profile = ({ auth }) => {
               />
               <spacer /> <spacer /> Member since {profile.date.substring(0, 4)}
               <div>
-                {user.uid !== id && (
-                  <button
-                    className="btn btn-danger mb-3 mx-2 d-flex justify-content-center align-items-center"
-                    onClick={followHandler}
-                  >
-                    {follow ? `Unfollow` : `Follow`}
-                  </button>
+                {user._id !== id && (
+                  <>
+                    {follow ? (
+                      <button
+                        className="btn btn-danger mb-3 mx-2 d-flex justify-content-center align-items-center"
+                        onClick={() => {
+                          onClickUnFollow();
+                        }}
+                      >
+                        Unfollow
+                      </button>
+                    ) : (
+                      <button
+                        className="btn btn-danger mb-3 mx-2 d-flex justify-content-center align-items-center"
+                        onClick={() => {
+                          onClickFollow();
+                        }}
+                      >
+                        Follow
+                      </button>
+                    )}
+                  </>
                 )}
               </div>
             </div>
