@@ -150,3 +150,7 @@ body {
   background-color: #e50914;
   border-color: #e50914;
 } */
+
+a:hover {
+  color: #ffffff;
+}
