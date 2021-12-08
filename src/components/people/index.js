@@ -50,7 +50,7 @@ const People = ({ auth }) => {
             {people.map((elem) => {
               return (
                 <li
-                  className="mx-2 col-1 person-container"
+                  className="mx-2 col-1 person-container cursor-pointer"
                   onClick={() => {
                     gotoProfile(elem._id);
                   } }
