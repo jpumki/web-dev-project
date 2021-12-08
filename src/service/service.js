@@ -12,7 +12,18 @@ export const createProfile = (profile) =>
     },
   }).then((response) => response.json());
 
+export const addMovie = (profile) => {
+  fetch(`${URL}/${profile._id}/movie`, {
+    method: "PUT",
+    body: JSON.stringify(profile),
+    headers: {
+      "content-type": "application/json",
+    },
+  }).then((response) => response.json());
+};
+
 export default {
   findProfileById,
   createProfile,
+  addMovie,
 };

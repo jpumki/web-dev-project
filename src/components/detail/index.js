@@ -15,11 +15,35 @@ const Detail = ({ auth }) => {
   const [error, setError] = useState();
   const [loading, setLoading] = useState();
   const [profile, setProfile] = useState();
-  const [has, setHas] = useState();
+  const [has, setHas] = useState(false);
+
   const findProfileById = (id) => {
-    service.findProfileById(id).then((profile) => setProfile(profile));
+    service.findProfileById(id).then((profile) => {
+      debugger;
+      setProfile(profile);
+      for (var i = 0; i < profile.movieList.length; i++) {
+        if (profile.movieList[i].id == result.id) {
+          setHas(true);
+        }
+      }
+    });
   };
+
   const { id } = useParams();
+
+  const onClickAdd = () => {
+    const newProfile = profile;
+    const newMovie = {
+      id: result.id,
+      name: result.original_title
+        ? result.original_title
+        : result.original_name,
+      year: result.release_date,
+      img: result.poster_path,
+    };
+    newProfile.movieList.push(newMovie);
+    service.addMovie(newProfile);
+  };
 
   useEffect(() => {
     async function getFilmDetail() {
@@ -57,7 +81,6 @@ const Detail = ({ auth }) => {
       await auth.onAuthStateChanged((user) => {
         if (user) {
           setIsLoggin(true);
-          debugger;
           const uid = user.uid;
           findProfileById(uid);
           setInit(true);
@@ -99,12 +122,23 @@ const Detail = ({ auth }) => {
               </h3>
               {isLoggin && (
                 <div className="col-2 mx-3 ">
-                  <button
-                    className="btn btn-danger  w-100 d-flex align-items-center justify-content-center cursor-pointer"
-                    onClick={() => {}}
-                  >
-                    Add to List
-                  </button>
+                  {has ? (
+                    <button
+                      className="btn btn-danger  w-100 d-flex align-items-center justify-content-center cursor-pointer"
+                      onClick={() => {}}
+                    >
+                      Remove from List
+                    </button>
+                  ) : (
+                    <button
+                      className="btn btn-danger  w-100 d-flex align-items-center justify-content-center cursor-pointer"
+                      onClick={() => {
+                        onClickAdd();
+                      }}
+                    >
+                      Add to List
+                    </button>
+                  )}
                 </div>
               )}
             </div>
