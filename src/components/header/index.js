@@ -55,11 +55,12 @@ const Header = ({ auth }) => {
           <div className="w-100 d-flex align-items-center justify-content-end ">
             {init && (
               <>
-                <Link className="header-link " to={`/profile/${user.uid}`}>
+                <a className="header-link " href={`/profile/${user.uid}`}>
                   <div className="mx-3 d-flex align-items-center justify-content-center cursor-pointer">
                     Profile
                   </div>
-                </Link>
+                </a>
+
                 <div className="col-1 mx-2" onClick={onLogOutClick}>
                   <button className="btn btn-danger w-100 d-flex justify-content-center align-items-center cursor-pointer">
                     Sign Out
