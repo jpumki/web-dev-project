@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import service from "../../service/service";
-import Profile from "../profile";
 import "./people.css";
 import Swal from "sweetalert2";
 const People = ({ auth }) => {
