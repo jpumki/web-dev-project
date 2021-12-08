@@ -27,7 +27,6 @@ const Header = ({ auth }) => {
   }, []);
   return (
     <header>
-      {console.log(user)}
       <ul className="d-flex w-100">
         <li>
           <Link className="header-link" to="/">
