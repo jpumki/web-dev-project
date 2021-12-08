@@ -159,9 +159,9 @@ const SignIn = ({ auth }) => {
               />
             </div>
           </form>
-          <div className="mt-3">
+          <div className="mt-3 cursor-pointer" onClick={goSignUp}>
             New to the site?{" "}
-            <a className="text-underline cursor-pointer" onClick={goSignUp}>
+            <a className="text-underline" >
               {"  "}
               <u>Sign up here</u>
             </a>
@@ -169,10 +169,6 @@ const SignIn = ({ auth }) => {
         </div>
       ) : (
         <form onSubmit={onSignUp}>
-          <div
-            className="cursor-pointer"
-            onClick={goLogin}
-          >{`<- Back to Login`}</div>
           <h1 className="login-h1">Sign Up</h1>
 
           <div className="login-label">Name</div>
@@ -235,6 +231,14 @@ const SignIn = ({ auth }) => {
 
           {error && <div className="pt-2 error-message">{errorMessage}</div>}
 
+      
+
+          <div className="cursor-pointer mt-3" onClick={goLogin}>
+            Have your account already?{" "}
+            <a className="text-underline">
+              <u>Back to Login </u>
+            </a>
+          </div>
           <div>
             <input
               className=" btn btn-danger mt-3 mb-2 d-flex justify-content-center align-items-center"
