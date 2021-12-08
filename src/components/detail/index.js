@@ -41,8 +41,9 @@ const Detail = ({ auth }) => {
       name: result.original_title
         ? result.original_title
         : result.original_name,
-      year: result.release_date,
+      year: result.release_date ? result.release_date : result.first_air_date,
       img: result.poster_path,
+      type: isMovie ? 0 : 1,
     };
     newProfile.movieList.push(newMovie);
     service.handleMovie(newProfile);
