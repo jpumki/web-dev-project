@@ -68,7 +68,12 @@ const Profile = ({ auth }) => {
   const onClickUnFollow = () => {
     const newProfile = profile;
     newProfile.followers.splice(index, 1);
-    service.handleFilm(newProfile);
+    service.handleFollower(newProfile);
+
+    const newUser = user;
+    newUser.followings.splice(index, 1);
+    service.handleFollowing(newUser);
+
     setFollow(false);
   };
 
