@@ -160,75 +160,65 @@ const Profile = ({ auth }) => {
 
             <div id="content">
               <div id="content-1">
-                <p className="container">
-                  <p className="card" style={{ float: "left" }}>
-                    <img
-                      style={{
-                        height: "70px",
-                        width: "70px",
-                        borderRadius: "50%",
-                        margin: "auto auto 15px",
-                        display: "block",
-                      }}
-                      src="https://i.pinimg.com/originals/e2/c7/ba/e2c7ba0ef1467ac03b077275e14a9247.jpg"
-                    />
-                    <p>Kskathy</p>
-                    <p style={{ color: "gray" }}>Profile</p>
-                  </p>
-                </p>
-
-                <p className="container">
-                  <p className="card" style={{ marginLeft: "150px" }}>
-                    <img
-                      style={{
-                        height: "70px",
-                        width: "70px",
-                        borderRadius: "50%",
-                        margin: "auto auto 15px",
-                        display: "block",
-                      }}
-                      src="https://th.bing.com/th/id/OIP.zONx8yK7LpWE15PpDQ-a9AAAAA?pid=ImgDet&rs=1"
-                    />
-                    <p>TaylorSwift</p>
-                    <p style={{ color: "gray" }}>Profile</p>
-                  </p>
-                </p>
+                {profile.followers.length > 0 && (
+                  <ul>
+                    {profile.followers.map((elem) => {
+                      return (
+                        <li className="mx-2 w-100 cursor-pointer">
+                          <a href={`/profile/${elem.id}`}>
+                            <p className="container">
+                              <p className="card" style={{ float: "left" }}>
+                                <img
+                                  style={{
+                                    height: "70px",
+                                    width: "70px",
+                                    borderRadius: "50%",
+                                    margin: "auto auto 15px",
+                                    display: "block",
+                                  }}
+                                  src="https://i.pinimg.com/originals/e2/c7/ba/e2c7ba0ef1467ac03b077275e14a9247.jpg"
+                                />
+                                <p>{elem.name}</p>
+                                <p style={{ color: "gray" }}>Profile</p>
+                              </p>
+                            </p>
+                          </a>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                )}
               </div>
 
               <div id="content-2">
-                <p className="container">
-                  <p className="card" style={{ float: "left" }}>
-                    <img
-                      style={{
-                        height: "70px",
-                        width: "70px",
-                        borderRadius: "50%",
-                        margin: "auto auto 15px",
-                        display: "block",
-                      }}
-                      src="https://th.bing.com/th/id/OIP.ulawi7jK0U9slojC8fSNJQHaFj?pid=ImgDet&rs=1"
-                    />
-                    <p>KimKardashian</p>
-                    <p style={{ color: "gray" }}>Profile</p>
-                  </p>
-                </p>
-
-                <p className="container">
-                  <p className="card" style={{ marginLeft: "150px" }}>
-                    <img
-                      style={{
-                        height: "70px",
-                        width: "70px",
-                        borderRadius: "50%",
-                        margin: "auto auto 15px",
-                        display: "block",
-                      }}
-                      src="https://th.bing.com/th/id/R.5288ec5b89cac92fc7877fda637f5188?rik=XiD72loz%2fDFPoA&pid=ImgRaw&r=0"
-                    />
-                    <p>JakeJ</p>
-                    <p style={{ color: "gray" }}>Profile</p>
-                  </p>
-                </p>
+                {profile.followings.length > 0 && (
+                  <ul>
+                    {profile.followings.map((elem) => {
+                      return (
+                        <li className="mx-2 w-100 cursor-pointer">
+                          <a href={`/profile/${elem.id}`}>
+                            <p className="container">
+                              <p className="card" style={{ float: "left" }}>
+                                <img
+                                  style={{
+                                    height: "70px",
+                                    width: "70px",
+                                    borderRadius: "50%",
+                                    margin: "auto auto 15px",
+                                    display: "block",
+                                  }}
+                                  src="https://i.pinimg.com/originals/e2/c7/ba/e2c7ba0ef1467ac03b077275e14a9247.jpg"
+                                />
+                                <p>{elem.name}</p>
+                                <p style={{ color: "gray" }}>Profile</p>
+                              </p>
+                            </p>
+                          </a>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                )}
               </div>
 
               <div id="content-3">
