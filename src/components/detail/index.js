@@ -17,21 +17,21 @@ const Detail = ({ auth }) => {
   const [profile, setProfile] = useState();
   const [has, setHas] = useState(false);
 
-  const findProfileById = (id) => {
-    service.findProfileById(id).then((profile) => {
-      debugger;
+  const { id } = useParams();
+
+  const findProfileById = (uid) => {
+    service.findProfileById(uid).then((profile) => {
       setProfile(profile);
+      debugger;
       if (profile.movieList.length > 0) {
         for (var i = 0; i < profile.movieList.length; i++) {
-          if (profile.movieList[i].id == result.id) {
+          if (profile.movieList[i].id == id) {
             setHas(true);
           }
         }
       }
     });
   };
-
-  const { id } = useParams();
 
   const onClickAdd = () => {
     const newProfile = profile;
