@@ -44,6 +44,7 @@ const Detail = ({ auth }) => {
     };
     newProfile.movieList.push(newMovie);
     service.addMovie(newProfile);
+    setHas(true);
   };
 
   useEffect(() => {
