@@ -22,7 +22,6 @@ const Detail = ({ auth }) => {
   const findProfileById = (uid) => {
     service.findProfileById(uid).then((profile) => {
       setProfile(profile);
-      debugger;
       if (profile.movieList.length > 0) {
         for (var i = 0; i < profile.movieList.length; i++) {
           if (profile.movieList[i].id == id) {
