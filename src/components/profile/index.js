@@ -6,7 +6,13 @@ const Profile = ({ auth }) => {
   const [profile, setProfile] = useState();
 
   const findProfileById = (id) => {
-    service.findProfileById(id).then((profile) => setProfile(profile));
+    service.findProfileById(id).then((profile) => {
+      if (profile === null) {
+        window.location.href = "/";
+      } else {
+        setProfile(profile);
+      }
+    });
   };
 
   const { id } = useParams();
@@ -22,6 +28,7 @@ const Profile = ({ auth }) => {
     }
     userInfo();
   }, []);
+
   return (
     <div>
       <div>

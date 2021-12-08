@@ -25,9 +25,31 @@ export const handleFilm = (profile) => {
   }).then((response) => response.json());
 };
 
+export const handleFollower = (profile) => {
+  fetch(`${URL}/${profile._id}/follower`, {
+    method: "PUT",
+    body: JSON.stringify(profile),
+    headers: {
+      "content-type": "application/json",
+    },
+  }).then((response) => response.json());
+};
+
+export const handleFollowing = (profile) => {
+  fetch(`${URL}/${profile._id}/following`, {
+    method: "PUT",
+    body: JSON.stringify(profile),
+    headers: {
+      "content-type": "application/json",
+    },
+  }).then((response) => response.json());
+};
+
 export default {
   findProfileById,
   findAllProfile,
   createProfile,
   handleFilm,
+  handleFollower,
+  handleFollowing,
 };
