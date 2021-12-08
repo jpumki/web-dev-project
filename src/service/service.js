@@ -1,5 +1,8 @@
 const URL = "http://localhost:4000/profile";
 
+export const findAllProfile = () =>
+  fetch(`${URL}`).then((response) => response.json());
+
 export const findProfileById = (id) =>
   fetch(`${URL}/${id}`).then((response) => response.json());
 
@@ -24,6 +27,7 @@ export const handleFilm = (profile) => {
 
 export default {
   findProfileById,
+  findAllProfile,
   createProfile,
   handleFilm,
 };

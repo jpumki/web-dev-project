@@ -34,6 +34,11 @@ const Header = ({ auth }) => {
           </Link>
         </li>
         <li className="cursor-pointer">
+          <Link className="header-link" to="/people">
+            People
+          </Link>
+        </li>
+        <li className="cursor-pointer">
           <Link className="header-link" to="/search">
             Search
           </Link>
