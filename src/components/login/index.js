@@ -150,7 +150,7 @@ const SignIn = ({ auth }) => {
               required
               onChange={onChange}
             />
-            {error && <div>Error Occured</div>}
+            {error && <div className="pt-2 error-message">Error Occured</div>}
             <div>
               <input
                 className=" btn btn-danger mt-3 mb-2 d-flex justify-content-center align-items-center"
