@@ -24,6 +24,7 @@ const Profile = ({ auth }) => {
   return (
     <div>
       <div>
+        {console.log(profile)}
         <div>
           <img />
         </div>

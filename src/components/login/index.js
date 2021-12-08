@@ -5,7 +5,6 @@ import {
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
 } from "firebase/auth";
-import firebaseApp from "../../firebase/firebase";
 import service from "../../service/service";
 const Login = ({ auth }) => {
   const [isLoggin, setIsLoggin] = useState(false);
@@ -13,7 +12,7 @@ const Login = ({ auth }) => {
     auth.onAuthStateChanged((user) => {
       if (user) {
         setIsLoggin(true);
-        // window.location.href = "/";
+        window.location.href = "/";
       } else {
         setIsLoggin(false);
       }
@@ -40,7 +39,6 @@ const Login = ({ auth }) => {
 };
 
 const SignIn = ({ auth }) => {
-  const [id, setId] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -49,16 +47,6 @@ const SignIn = ({ auth }) => {
   const [error, setError] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [role, setRole] = useState(1);
-
-  const createProfile = () => {
-    const newProfile = {
-      _id: id,
-      email: email,
-      name: name, 
-      role: role,
-    }
-    service.createProfile(newProfile);
-  };
 
   const onChange = (event) => {
     const {
@@ -115,10 +103,14 @@ const SignIn = ({ auth }) => {
         try {
           await createUserWithEmailAndPassword(auth, email, password).then(
             (user) => {
-              setId(user.user.uid);
-              createProfile();
-              debugger;
-              console.log("done");
+              const uid = user.user.uid;
+              const newProfile = {
+                _id: uid,
+                email: email,
+                name: name,
+                role: role,
+              };
+              service.createProfile(newProfile);
             }
           );
         } catch (error) {
