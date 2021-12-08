@@ -44,8 +44,9 @@ const Search = () => {
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
+      <form className="search-form" onSubmit={handleSubmit}>
         <input
+          className="search-input"
           placeholder="Search Movies or TV Shows..."
           value={search}
           onChange={updateTerm}
