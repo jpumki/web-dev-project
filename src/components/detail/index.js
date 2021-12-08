@@ -16,6 +16,7 @@ const Detail = ({ auth }) => {
   const [loading, setLoading] = useState();
   const [profile, setProfile] = useState();
   const [has, setHas] = useState(false);
+  const [index, setIndex] = useState();
 
   const { id } = useParams();
 
@@ -26,6 +27,7 @@ const Detail = ({ auth }) => {
         for (var i = 0; i < profile.movieList.length; i++) {
           if (profile.movieList[i].id == id) {
             setHas(true);
+            setIndex(i);
           }
         }
       }
@@ -43,8 +45,15 @@ const Detail = ({ auth }) => {
       img: result.poster_path,
     };
     newProfile.movieList.push(newMovie);
-    service.addMovie(newProfile);
+    service.handleMovie(newProfile);
     setHas(true);
+  };
+
+  const onClickRemove = () => {
+    const newProfile = profile;
+    newProfile.movieList.splice(index, 1);
+    service.handleMovie(newProfile);
+    setHas(false);
   };
 
   useEffect(() => {
@@ -127,7 +136,9 @@ const Detail = ({ auth }) => {
                   {has ? (
                     <button
                       className="btn btn-danger  w-100 d-flex align-items-center justify-content-center cursor-pointer"
-                      onClick={() => {}}
+                      onClick={() => {
+                        onClickRemove();
+                      }}
                     >
                       Remove from List
                     </button>
