@@ -12,7 +12,7 @@ export const createProfile = (profile) =>
     },
   }).then((response) => response.json());
 
-export const handleMovie = (profile) => {
+export const handleFilm = (profile) => {
   fetch(`${URL}/${profile._id}/movie`, {
     method: "PUT",
     body: JSON.stringify(profile),
@@ -25,5 +25,5 @@ export const handleMovie = (profile) => {
 export default {
   findProfileById,
   createProfile,
-  handleMovie,
+  handleFilm,
 };
