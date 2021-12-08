@@ -21,9 +21,11 @@ const Detail = ({ auth }) => {
     service.findProfileById(id).then((profile) => {
       debugger;
       setProfile(profile);
-      for (var i = 0; i < profile.movieList.length; i++) {
-        if (profile.movieList[i].id == result.id) {
-          setHas(true);
+      if (profile.movieList.length > 0) {
+        for (var i = 0; i < profile.movieList.length; i++) {
+          if (profile.movieList[i].id == result.id) {
+            setHas(true);
+          }
         }
       }
     });
