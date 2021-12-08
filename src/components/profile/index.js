@@ -6,6 +6,7 @@ import popcorn from "../../assets/noPosterSmall.png";
 const Profile = ({ auth }) => {
   const [profile, setProfile] = useState();
   const [init, setInit] = useState(false);
+  const [user, setUSer] = useState();
 
   const findProfileById = (id) => {
     service.findProfileById(id).then((profile) => {
@@ -26,6 +27,7 @@ const Profile = ({ auth }) => {
           window.location.href = "/";
         } else {
           findProfileById(id);
+          setUSer(user);
         }
       });
     }
@@ -37,7 +39,7 @@ const Profile = ({ auth }) => {
       {init && (
         <>
           <div>
-            <div>
+            <div className="d-flex align-items-baseline">
               <img
                 style={{ width: "70px", height: "70px", borderRadius: "50%" }}
                 src={
@@ -53,6 +55,11 @@ const Profile = ({ auth }) => {
                 }
               />
               <spacer /> <spacer /> Member since {profile.date.substring(0, 4)}
+              <div>
+                {user.uid !== id && (
+                  <button className="btn btn-danger mb-3 mx-2">Follow</button>
+                )}
+              </div>
             </div>
           </div>
 
@@ -145,7 +152,13 @@ const Profile = ({ auth }) => {
                     {profile.movieList.map((elem) => {
                       return (
                         <li className="mx-2 w-100 cursor-pointer">
-                          <a href={elem.type === 0 ? `/movie/${elem.id}` : `/show/${elem.id}`}>
+                          <a
+                            href={
+                              elem.type === 0
+                                ? `/movie/${elem.id}`
+                                : `/show/${elem.id}`
+                            }
+                          >
                             <p className="container">
                               <img
                                 style={{

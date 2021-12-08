@@ -1,83 +1,74 @@
 .profile-account-row {
-    display: flex;
-    justify-content: space-between;
+  display: flex;
+  justify-content: space-between;
 }
 
 #container {
-    margin-right: 60px;
-    margin-top: 40px;
-
+  margin-right: 60px;
+  margin-top: 15px;
 }
 
 #container input {
-    height: 2.5em;
-    visibility: hidden;
-
+  height: 2.5em;
+  visibility: hidden;
 }
 
 #container label {
-    border-radius: .25em .25em 0 0;
-    cursor: pointer;
-    display: block;
-    float: left;
-    font-size: 1em;
-    height: 2.5em;
-    line-height: 2.5em;
-    margin-right: .25em;
-    padding: 0 1.5em;
-    text-align: center;
-    border: 1px solid gray;
-
+  border-radius: 0.25em 0.25em 0 0;
+  cursor: pointer;
+  display: block;
+  float: left;
+  font-size: 1em;
+  height: 2.5em;
+  line-height: 2.5em;
+  margin-right: 0.25em;
+  padding: 0 1.5em;
+  text-align: center;
+  border: 1px solid gray;
 }
 
 #container input:hover + label {
-    background: #ddd;
-    color: #666;
-
-
+  background: #ddd;
+  color: #666;
 }
 
 #container input:checked + label {
-    background: #f1f1f1;
-    color: #444;
-    position: relative;
-    z-index: 6;
-
+  background: #f1f1f1;
+  color: #444;
+  position: relative;
+  z-index: 6;
 }
 
 #content {
-    border-radius: 0 .25em .25em .25em;
-    min-height: 20em;
-    width: 100%;
-    z-index: 5;
-    border: 1px solid gray;
-
+  border-radius: 0 0.25em 0.25em 0.25em;
+  min-height: 20em;
+  width: 100%;
+  z-index: 5;
+  border: 1px solid gray;
 }
 
 #content div {
-    opacity: 0;
-    padding: 1.5em;
-    position: absolute;
-    z-index: -100;
-
+  opacity: 0;
+  padding: 1.5em;
+  position: absolute;
+  z-index: -100;
 }
 
 #container input#tab-1:checked ~ #content #content-1,
 #container input#tab-2:checked ~ #content #content-2,
 #container input#tab-3:checked ~ #content #content-3 {
-    opacity: 1;
-    z-index: 100;
+  opacity: 1;
+  z-index: 100;
 }
 
 input.visible {
-    visibility: visible !important;
+  visibility: visible !important;
 }
 
-
-   .card {
-       background: #353434
-       top -10% center no-repeat;
-       background-size: contain;
-       border-radius: 10px;
-       text-align: center;
-       padding: 10px 20px;}
+.card {
+  background: #353434 top -10% center no-repeat;
+  background-size: contain;
+  border-radius: 10px;
+  text-align: center;
+  padding: 10px 20px;
+}

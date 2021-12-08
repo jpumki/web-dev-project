@@ -1,0 +1,6 @@
+.person-container {
+  transition: 0.5s;
+}
+.person-container:hover {
+  transform: translateY(-4px);
+}
