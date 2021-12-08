@@ -40,9 +40,7 @@ const People = ({ auth }) => {
 
   return (
     <div>
-      <div>
-        <h1>People</h1>
-      </div>
+     <div className="m-2 section-title">Connect with others</div>
       {init && (
         <div>
           <ul>
