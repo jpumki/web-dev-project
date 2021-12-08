@@ -46,14 +46,14 @@ const Detail = ({ auth }) => {
       type: isMovie ? 0 : 1,
     };
     newProfile.movieList.push(newMovie);
-    service.handleMovie(newProfile);
+    service.handleFilm(newProfile);
     setHas(true);
   };
 
   const onClickRemove = () => {
     const newProfile = profile;
     newProfile.movieList.splice(index, 1);
-    service.handleMovie(newProfile);
+    service.handleFilm(newProfile);
     setHas(false);
   };
 
