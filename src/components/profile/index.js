@@ -7,6 +7,8 @@ const Profile = ({ auth }) => {
   const [profile, setProfile] = useState();
   const [init, setInit] = useState(false);
   const [user, setUSer] = useState();
+  const [follow, setFollow] = useState(false);
+  const [index, setIndex] = useState();
 
   const findProfileById = (id) => {
     service.findProfileById(id).then((profile) => {
@@ -14,12 +16,25 @@ const Profile = ({ auth }) => {
         window.location.href = "/";
       } else {
         setProfile(profile);
+        if (profile.followers.length > 0) {
+          for (var i = 0; i < profile.followers.length; i++) {
+            if (profile.followers[i].id == user._id) {
+              setFollow(true);
+              setIndex(i);
+            }
+          }
+        }
         setInit(true);
       }
     });
   };
 
   const { id } = useParams();
+
+  const followHandler = () => {
+    setFollow(true);
+  };
+
   useEffect(() => {
     async function userInfo() {
       await auth.onAuthStateChanged((user) => {
@@ -57,7 +72,12 @@ const Profile = ({ auth }) => {
               <spacer /> <spacer /> Member since {profile.date.substring(0, 4)}
               <div>
                 {user.uid !== id && (
-                  <button className="btn btn-danger mb-3 mx-2">Follow</button>
+                  <button
+                    className="btn btn-danger mb-3 mx-2 d-flex justify-content-center align-items-center"
+                    onClick={followHandler}
+                  >
+                    {follow ? `Unfollow` : `Follow`}
+                  </button>
                 )}
               </div>
             </div>

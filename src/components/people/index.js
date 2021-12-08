@@ -1,7 +1,8 @@
 import React, { useState, useEffect } from "react";
 import service from "../../service/service";
 import Profile from "../profile";
-import "./people.css"
+import "./people.css";
+import Swal from "sweetalert2";
 const People = ({ auth }) => {
   const [people, setPeople] = useState();
   const [isLogginIn, setIsLoggin] = useState(false);
@@ -25,6 +26,19 @@ const People = ({ auth }) => {
     userInfo();
   }, []);
 
+  const gotoProfile = (id) => {
+    if (isLogginIn) {
+      window.location.href = `/profile/${id}`;
+    } else {
+      Swal.fire({
+        icon: "error",
+        title: "You need to login to see profile",
+      }).then(() => {
+        window.location.href = "/login";
+      });
+    }
+  };
+
   return (
     <div>
       <div>
@@ -35,10 +49,13 @@ const People = ({ auth }) => {
           <ul>
             {people.map((elem) => {
               return (
-                <li className="mx-2 col-1 person-container">
-                  <a href={`/profile/${elem._id}`}>
-                    <ProfileCard person={elem} />
-                  </a>
+                <li
+                  className="mx-2 col-1 person-container"
+                  onClick={() => {
+                    gotoProfile(elem._id);
+                  } }
+                >
+                  <ProfileCard person={elem} />
                 </li>
               );
             })}
