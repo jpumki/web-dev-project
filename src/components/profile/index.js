@@ -223,10 +223,10 @@ const Profile = ({ auth }) => {
 
               <div id="content-3">
                 {profile.movieList.length > 0 && (
-                  <ul>
+                  <ul className="flex-wrap">
                     {profile.movieList.map((elem) => {
                       return (
-                        <li className="mx-2 w-100 cursor-pointer">
+                        <li className="mx-2 col-2 cursor-pointer">
                           <a
                             href={
                               elem.type === 0
