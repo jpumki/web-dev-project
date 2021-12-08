@@ -9,7 +9,9 @@ const Profile = ({ auth }) => {
   const [initUser, setInitUser] = useState(false);
   const [user, setUser] = useState();
   const [follow, setFollow] = useState(false);
-  const [index, setIndex] = useState();
+  const [followerIndex, setFollowerIndex] = useState();
+  const [followingIndex, setFollowingIndex] = useState();
+  const { id } = useParams();
 
   const findProfileById = (id, uid) => {
     service.findProfileById(id).then((profile) => {
@@ -22,7 +24,7 @@ const Profile = ({ auth }) => {
           for (var i = 0; i < profile.followers.length; i++) {
             if (profile.followers[i].id == uid) {
               setFollow(true);
-              setIndex(i);
+              setFollowerIndex(i);
             }
           }
         }
@@ -37,15 +39,20 @@ const Profile = ({ auth }) => {
         window.location.href = "/";
       } else {
         setUser(user);
+        if (user.followings.length > 0) {
+          for (var i = 0; i < user.followings.length; i++) {
+            if (user.followings[i].id == id) {
+              setFollow(true);
+              setFollowingIndex(i);
+            }
+          }
+        }
         setInitUser(true);
       }
     });
   };
 
-  const { id } = useParams();
-
   const onClickFollow = () => {
-    
     const newProfile = profile;
     const newFollower = {
       id: user._id,
@@ -53,7 +60,7 @@ const Profile = ({ auth }) => {
     };
     newProfile.followers.push(newFollower);
     service.handleFollower(newProfile);
-    
+
     const newUser = user;
     const newFollowing = {
       id: profile._id,
@@ -67,11 +74,11 @@ const Profile = ({ auth }) => {
 
   const onClickUnFollow = () => {
     const newProfile = profile;
-    newProfile.followers.splice(index, 1);
+    newProfile.followers.splice(followerIndex, 1);
     service.handleFollower(newProfile);
 
     const newUser = user;
-    newUser.followings.splice(index, 1);
+    newUser.followings.splice(followingIndex, 1);
     service.handleFollowing(newUser);
 
     setFollow(false);
