@@ -13,7 +13,7 @@ const Login = ({ auth }) => {
     auth.onAuthStateChanged((user) => {
       if (user) {
         setIsLoggin(true);
-        window.location.href = "/";
+        // window.location.href = "/";
       } else {
         setIsLoggin(false);
       }
@@ -40,6 +40,7 @@ const Login = ({ auth }) => {
 };
 
 const SignIn = ({ auth }) => {
+  const [id, setId] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -50,7 +51,13 @@ const SignIn = ({ auth }) => {
   const [role, setRole] = useState(1);
 
   const createProfile = () => {
-    service.createProfile({ name: name });
+    const newProfile = {
+      _id: id,
+      email: email,
+      name: name, 
+      role: role,
+    }
+    service.createProfile(newProfile);
   };
 
   const onChange = (event) => {
@@ -107,8 +114,10 @@ const SignIn = ({ auth }) => {
       } else {
         try {
           await createUserWithEmailAndPassword(auth, email, password).then(
-            () => {
+            (user) => {
+              setId(user.user.uid);
               createProfile();
+              debugger;
               console.log("done");
             }
           );

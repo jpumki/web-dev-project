@@ -1,5 +1,8 @@
 const URL = "http://localhost:4000/profile";
 
+export const findProfileById = (id) =>
+  fetch(`${URL}/${id}`).then((response) => response.json());
+
 export const createProfile = (profile) =>
   fetch(URL, {
     method: "POST",
@@ -10,5 +13,6 @@ export const createProfile = (profile) =>
   }).then((response) => response.json());
 
 export default {
+  findProfileById,
   createProfile,
 };
