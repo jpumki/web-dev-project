@@ -1,8 +1,13 @@
 .home-container {
   padding: 20px 4px;
 }
+
 .poster-container {
   font-size: 12px;
+  transition: 0.5s;
+}
+.ainer:hover {
+  transform: translateY(-4px);
 }
 
 .poster-imgcontainer {

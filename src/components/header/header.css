@@ -38,4 +38,11 @@ button {
   display: flex;
   align-items: center;
   justify-content: center;
+  font-weight: bold;
+  font-size: 20px;
+  transition: 0.5s;
+}
+
+.header-link:hover {
+  transform: translateY(-3px);
 }

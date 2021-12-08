@@ -1,21 +1,22 @@
 import React, { useEffect, useState } from "react";
 import "./profile.css";
 import service from "../../service/service";
+import { useParams } from "react-router-dom";
 const Profile = ({ auth }) => {
   const [profile, setProfile] = useState();
 
-  const findMovieById = (id) => {
+  const findProfileById = (id) => {
     service.findProfileById(id).then((profile) => setProfile(profile));
   };
 
+  const { id } = useParams();
   useEffect(() => {
     async function userInfo() {
       await auth.onAuthStateChanged((user) => {
         if (!user) {
           window.location.href = "/";
         } else {
-          const id = window.location.pathname.substring(9);
-          findMovieById(id);
+          findProfileById(id);
         }
       });
     }

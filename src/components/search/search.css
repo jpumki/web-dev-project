@@ -9,6 +9,10 @@
 }
 .poster-container {
   font-size: 12px;
+  transition: 0.5s;
+}
+.poster-container:hover {
+  transform: translateY(-4px);
 }
 
 .poster-imgcontainer {

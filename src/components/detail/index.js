@@ -3,7 +3,10 @@ import { moviesApi, tvApi } from "../../api";
 import { useParams } from "react-router-dom";
 import "./detail.css";
 import popcorn from "../../assets/noPosterSmall.png";
-const Detail = () => {
+import service from "../../service/service";
+const Detail = ({ auth }) => {
+  const [isLoggin, setIsLoggin] = useState(false);
+  const [init, setInit] = useState(false);
   const [result, setResult] = useState();
   const [isMovie, setIsMovie] = useState(
     window.location.pathname.includes("/movie/")
@@ -11,14 +14,19 @@ const Detail = () => {
   const [video, setVideo] = useState();
   const [error, setError] = useState();
   const [loading, setLoading] = useState();
-
+  const [profile, setProfile] = useState();
+  const [has, setHas] = useState();
+  const findProfileById = (id) => {
+    service.findProfileById(id).then((profile) => setProfile(profile));
+  };
   const { id } = useParams();
+
   useEffect(() => {
     async function getFilmDetail() {
       const parsedId = parseInt(id);
-      // if (isNaN(parsedId)) {
-      //   window.location.href = "/";
-      // }
+      if (isNaN(parsedId)) {
+        window.location.href = "/";
+      }
       let result = null;
       let video = null;
       try {
@@ -28,7 +36,7 @@ const Detail = () => {
           setResult(result);
           const videoRequest = await moviesApi.movieVideo(parsedId);
           video = videoRequest.data;
-          debugger;
+
           setVideo(video);
         } else {
           const detailRequest = await tvApi.showDetail(parsedId);
@@ -36,7 +44,6 @@ const Detail = () => {
           setResult(result);
           const videoRequest = await tvApi.tvVideo(parsedId);
           video = videoRequest.data;
-          debugger;
           setVideo(video);
         }
       } catch {
@@ -46,7 +53,21 @@ const Detail = () => {
         setResult(result);
       }
     }
+    async function userInfo() {
+      await auth.onAuthStateChanged((user) => {
+        if (user) {
+          setIsLoggin(true);
+          debugger;
+          const uid = user.uid;
+          findProfileById(uid);
+          setInit(true);
+        } else {
+          setIsLoggin(false);
+        }
+      });
+    }
     getFilmDetail();
+    userInfo();
   }, []);
 
   return (
@@ -69,12 +90,24 @@ const Detail = () => {
                 : `url(${popcorn})`,
             }}
           />
-          <div className="detail-data">
-            <h3 className="detail-title">
-              {result.original_title
-                ? result.original_title
-                : result.original_name}
-            </h3>
+          <div className="detail-data px-3">
+            <div className="d-flex align-items-center">
+              <h3 className="detail-title">
+                {result.original_title
+                  ? result.original_title
+                  : result.original_name}
+              </h3>
+              {isLoggin && (
+                <div className="col-2 mx-3 ">
+                  <button
+                    className="btn btn-danger  w-100 d-flex align-items-center justify-content-center cursor-pointer"
+                    onClick={() => {}}
+                  >
+                    Add to List
+                  </button>
+                </div>
+              )}
+            </div>
             <div className="detail-itemcontainer">
               <span className="detail-item">
                 {result.release_date

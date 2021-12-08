@@ -28,12 +28,12 @@ const Header = ({ auth }) => {
   return (
     <header>
       <ul className="d-flex w-100">
-        <li>
+        <li className="cursor-pointer">
           <Link className="header-link" to="/">
             Home
           </Link>
         </li>
-        <li>
+        <li className="cursor-pointer">
           <Link className="header-link" to="/search">
             Search
           </Link>
@@ -41,7 +41,7 @@ const Header = ({ auth }) => {
         {!isLoggin ? (
           <div className="w-100 d-flex align-items-center justify-content-end ">
             <Link className="header-link " to="/login">
-              <button className="mx-3 btn btn-danger d-flex align-items-center justify-content-center">
+              <button className="mx-3 btn btn-danger d-flex align-items-center justify-content-center cursor-pointer">
                 Sign In
               </button>
             </Link>
@@ -51,12 +51,12 @@ const Header = ({ auth }) => {
             {init && (
               <>
                 <Link className="header-link " to={`/profile/${user.uid}`}>
-                  <div className="mx-3 d-flex align-items-center justify-content-center">
+                  <div className="mx-3 d-flex align-items-center justify-content-center cursor-pointer">
                     Profile
                   </div>
                 </Link>
                 <div className="col-1 mx-2" onClick={onLogOutClick}>
-                  <button className="btn btn-danger w-100 d-flex justify-content-center align-items-center">
+                  <button className="btn btn-danger w-100 d-flex justify-content-center align-items-center cursor-pointer">
                     Sign Out
                   </button>
                 </div>
