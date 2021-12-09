@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import "./profile.css";
 import service from "../../service/service";
 import { useParams } from "react-router-dom";
+import avatar from "../../assets/avatar.png";
 import popcorn from "../../assets/noPosterSmall.png";
 const Profile = ({ auth }) => {
   const [profile, setProfile] = useState();
@@ -19,7 +20,6 @@ const Profile = ({ auth }) => {
         window.location.href = "/";
       } else {
         setProfile(profile);
-        debugger;
         if (profile.followers.length > 0) {
           for (var i = 0; i < profile.followers.length; i++) {
             if (profile.followers[i].id == uid) {
@@ -99,267 +99,192 @@ const Profile = ({ auth }) => {
   }, []);
 
   return (
-    <div style={{ margin: "60px" }}>
+    <div className="m-4">
       {initProfile && initUser && (
-        <>
-          {console.log(profile)}
+        <div>
           <div>
-            <div className="d-flex align-items-baseline">
-              <img
-                style={{ width: "70px", height: "70px", borderRadius: "50%" }}
-                src={
-                  "https://th.bing.com/th/id/R.1abee17234dca9feaf9d0064bf491f6e?rik=Gs1TTKs9hDMyHg&pid=ImgRaw&r=0"
-                }
-              />
-              <spacer /> <spacer />
-              <span style={{ fontSize: "20px" }}>{profile.name}</span>
-              <img
-                style={{ width: "35px", height: "30px", marginLeft: "30px" }}
-                src={
-                  "https://myhoneypotsjuicy.com/wp-content/uploads/2018/05/video-icon.png"
-                }
-              />
-              <spacer /> <spacer /> Member since {profile.date.substring(0, 4)}
-              <div>
-                {user._id !== id && (
-                  <>
-                    {follow ? (
-                      <button
-                        className="btn btn-danger mb-3 mx-2 d-flex justify-content-center align-items-center"
-                        onClick={() => {
-                          onClickUnFollow();
-                        }}
-                      >
-                        Unfollow
-                      </button>
-                    ) : (
-                      <button
-                        className="btn btn-danger mb-3 mx-2 d-flex justify-content-center align-items-center"
-                        onClick={() => {
-                          onClickFollow();
-                        }}
-                      >
-                        Follow
-                      </button>
-                    )}
-                  </>
-                )}
-              </div>
-            </div>
+            <ProfileHeader
+              user={user}
+              profile={profile}
+              id={id}
+              follow={follow}
+              onClickFollow={onClickFollow}
+              onClickUnFollow={onClickUnFollow}
+            />
           </div>
-
-          <div id="container">
-            <input id="tab-1" type="radio" name="tab-group" checked="checked" />
-            <label htmlFor="tab-1">Followers</label>
-
-            <input id="tab-2" type="radio" name="tab-group" />
-            <label htmlFor="tab-2">Followings</label>
-
-            <input id="tab-3" type="radio" name="tab-group" />
-            <label htmlFor="tab-3">Favorites</label>
-
-            <div id="content">
-              <div id="content-1">
-                {profile.followers.length > 0 && (
-                  <ul>
-                    {profile.followers.map((elem) => {
-                      return (
-                        <li className="mx-2 w-100 cursor-pointer">
-                          <a href={`/profile/${elem.id}`}>
-                            <p className="container">
-                              <p className="card" style={{ float: "left" }}>
-                                <img
-                                  style={{
-                                    height: "70px",
-                                    width: "70px",
-                                    borderRadius: "50%",
-                                    margin: "auto auto 15px",
-                                    display: "block",
-                                  }}
-                                  src="https://i.pinimg.com/originals/e2/c7/ba/e2c7ba0ef1467ac03b077275e14a9247.jpg"
-                                />
-                                <p>{elem.name}</p>
-                                <p style={{ color: "gray" }}>Profile</p>
-                              </p>
-                            </p>
-                          </a>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                )}
-              </div>
-
-              <div id="content-2">
-                {profile.followings.length > 0 && (
-                  <ul>
-                    {profile.followings.map((elem) => {
-                      return (
-                        <li className="mx-2 w-100 cursor-pointer">
-                          <a href={`/profile/${elem.id}`}>
-                            <p className="container">
-                              <p className="card" style={{ float: "left" }}>
-                                <img
-                                  style={{
-                                    height: "70px",
-                                    width: "70px",
-                                    borderRadius: "50%",
-                                    margin: "auto auto 15px",
-                                    display: "block",
-                                  }}
-                                  src="https://i.pinimg.com/originals/e2/c7/ba/e2c7ba0ef1467ac03b077275e14a9247.jpg"
-                                />
-                                <p>{elem.name}</p>
-                                <p style={{ color: "gray" }}>Profile</p>
-                              </p>
-                            </p>
-                          </a>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                )}
-              </div>
-
-              <div id="content-3">
-                {profile.movieList.length > 0 && (
-                  <ul className="flex-wrap">
-                    {profile.movieList.map((elem) => {
-                      return (
-                        <li className="mx-2 col-2 cursor-pointer">
-                          <a
-                            href={
-                              elem.type === 0
-                                ? `/movie/${elem.id}`
-                                : `/show/${elem.id}`
-                            }
-                          >
-                            <p className="container">
-                              <img
-                                style={{
-                                  width: "100px",
-                                  height: "150px",
-                                  borderRadius: "10px",
-                                }}
-                                src={
-                                  elem.img
-                                    ? `https://image.tmdb.org/t/p/w300${elem.img}`
-                                    : popcorn
-                                }
-                              />
-                              <p>{elem.name}</p>
-                              <p style={{ color: "gray" }}>
-                                {elem.year.substring(0, 4)}
-                              </p>
-                            </p>
-                          </a>
-                        </li>
-                      );
-                    })}
-                  </ul>
-                )}
-              </div>
-            </div>
+          <div className="mt-4">
+            <ProfileBrowser profile={profile} />
           </div>
-
-          <AccountDetail profile={profile} />
-          <hr />
-          <PlanDetail />
-          <hr />
-          <Settings />
-        </>
+          <div>
+            <ProfileDetail profile={profile} />
+          </div>
+        </div>
       )}
     </div>
   );
 };
 
-const AccountDetail = ({ profile }) => {
+const ProfileHeader = ({
+  user,
+  profile,
+  id,
+  follow,
+  onClickFollow,
+  onClickUnFollow,
+}) => {
   return (
-    <div style={{ marginTop: "40px" }}>
-      <h3 className="pb-3" style={{ fontSize: "20px" }}>
-        Account
-      </h3>
-      <hr className="mb-3" />
+    <div className="d-flex align-items-baseline">
       <div>
-        <div className="d-flex">
-          <div className="col-xl-3">
-            <div clssName="justify-contents-center align-items-center">
-              <div>Membership & Billing</div>
+        <img src={avatar} className="profile-avatar" />
+      </div>
+      <span>{profile.name}</span>
+      <div>
+        <img />
+        <span>Member Since {profile.date.substring(0, 4)}</span>
+      </div>
+      <div>
+        {user._id !== id && (
+          <>
+            {follow ? (
               <button
-                className="btnClass"
-                style={{
-                  width: "120px",
-                  marginTop: "20px",
-                  color: "black",
-                  backgroundColor: "gray",
+                className="btn btn-danger follow-btn"
+                onClick={() => {
+                  onClickUnFollow();
                 }}
               >
-                Cancel Membership
+                Unfollow
               </button>
-            </div>
-          </div>
-          <div className="col-xl-9">
-            <div className="profile-account-row">
-              <span>{profile.email}</span>
-              <a style={{ color: "blue" }}>Change account email</a>
-            </div>
-            <div className="profile-account-row">
-              <span style={{ color: "gray" }}>password : ******</span>
-              <a style={{ color: "blue" }}>Change password</a>
-            </div>
-            <div className="profile-account-row">
-              <span style={{ color: "gray" }}>Phone : (646) 234 - 4234</span>
-              <a style={{ color: "blue" }}>Change phone number</a>
-            </div>
-            <hr className="mb-3" />
-            <div className="profile-account-row">
-              <span>junhoparkspaypal@gmail.com</span>
-              <a style={{ color: "blue" }}>Manage payment info</a>
-            </div>
-            <div className="profile-account-row">
-              <span style={{ color: "gray" }}>
-                Your next billing date is December 20, 2021
-              </span>
-              <a style={{ color: "blue" }}>Billing details</a>
-            </div>
-          </div>
-        </div>
+            ) : (
+              <button
+                className="btn btn-danger follow-btn"
+                onClick={() => {
+                  onClickFollow();
+                }}
+              >
+                Follow
+              </button>
+            )}
+          </>
+        )}
       </div>
     </div>
   );
 };
 
-const PlanDetail = () => {
-  return (
-    <div className="d-flex">
-      <div className="col-xl-3">Plan Detail</div>
-      <div className="d-flex justify-content-between col-xl-9">
-        <span>Premium</span>
-        <a style={{ color: "blue" }}>Change Plan</a>
-      </div>
-    </div>
-  );
-};
+const ProfileBrowser = ({ profile }) => {
+  const [tab, setTab] = useState("followers");
+  const onClickTab = (name) => {
+    setTab(name);
+  };
 
-const Settings = () => {
-  const setting = [
-    "Recent device streaming activity",
-    "Sign out of all devices",
-    "Download your personal information",
+  const tabs = ["followers", "followings", "favorites"];
+  const profileTabInfo = [
+    {
+      key: "followers",
+      contents: <ProfileFollowerCard profile={profile} />,
+    },
+    {
+      key: "followings",
+      contents: <ProfileFollowingCard profile={profile} />,
+    },
+    {
+      key: "favorites",
+      contents: <MovieCard profile={profile} />,
+    },
   ];
+
   return (
-    <div className="d-flex">
-      <div className="col-xl-3">Settings</div>
-      <div className="col-xl-9">
-        {setting.map((elem) => {
+    <div>
+      <div>
+        {tabs.map((elem) => {
           return (
-            <div>
-              <a style={{ color: "blue" }}>{elem}</a>
-            </div>
+            <button
+              name={elem}
+              className={`text-capitalize ${elem == tab && "selected"}`}
+              onClick={(e) => {
+                onClickTab(e.target.name);
+              }}
+            >
+              {elem}
+            </button>
           );
+        })}
+      </div>
+      <div className="profile-info-container">
+        {profileTabInfo.map((elem) => {
+          return <div>{elem.key === tab && elem.contents}</div>;
         })}
       </div>
     </div>
   );
 };
+
+const ProfileDetail = ({ profile }) => {
+  return (
+    <div>
+      <h1>Account</h1>
+      <div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </div>
+  );
+};
+
+const ProfileFollowerCard = ({ profile }) => {
+  return <div>Follower</div>;
+};
+
+const ProfileFollowingCard = ({ profile }) => {
+  return <div>Following</div>;
+};
+
+const MovieCard = ({ profile }) => {
+  return (
+    <div>
+      {profile.movieList.length > 0 && (
+        <ul className="flex-wrap">
+          {profile.movieList.map((movie) => {
+            return (
+              <li className="col-2 mt-4 mb-2 h-100 cursor-pointer card-container">
+                <a
+                  href={
+                    movie.type === 0
+                      ? `/movie/${movie.id}`
+                      : `/show/${movie.id}`
+                  }
+                >
+                  <div>
+                    <div>
+                      <img
+                        className="movie-card-img"
+                        src={
+                          movie.img
+                            ? `https://image.tmdb.org/t/p/w300${movie.img}`
+                            : popcorn
+                        }
+                      />
+                    </div>
+                    <div className="d-flex justify-content-center flex-column mt-2">
+                      <span className="fw-bold">
+                        {movie.name.length > 20
+                          ? `${movie.name.substring(0, 20)}...`
+                          : movie.name}
+                      </span>
+                      <span className="movie-year">
+                        {movie.year.substring(0, 4)}
+                      </span>
+                    </div>
+                  </div>
+                </a>
+              </li>
+            );
+          })}
+        </ul>
+      )}
+    </div>
+  );
+};
+
 export default Profile;

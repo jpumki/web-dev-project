@@ -57,7 +57,7 @@ const Header = ({ auth }) => {
               <>
                 <a className="header-link " href={`/profile/${user.uid}`}>
                   <div className="mx-3 d-flex align-items-center justify-content-center cursor-pointer">
-                    Profile
+                    MyProfile
                   </div>
                 </a>
 

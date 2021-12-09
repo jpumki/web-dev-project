@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import service from "../../service/service";
 import "./people.css";
 import Swal from "sweetalert2";
+import avator from "../../assets/avatar.png";
 const People = ({ auth }) => {
   const [people, setPeople] = useState();
   const [isLogginIn, setIsLoggin] = useState(false);
@@ -39,48 +40,59 @@ const People = ({ auth }) => {
   };
 
   return (
-    <div>
-     <div className="m-2 section-title">Connect with others</div>
+    <div className="people-container">
+      <div className=" section-title">Connect with others</div>
       {init && (
         <div>
-          <ul>
+          <div className="section-grid mt-0">
             {people.map((elem) => {
               return (
-                <li
-                  className="mx-2 col-1 person-container cursor-pointer"
+                <p
+                  className="person-container cursor-pointer mt-3"
                   onClick={() => {
                     gotoProfile(elem._id);
-                  } }
+                  }}
                 >
-                  <ProfileCard person={elem} />
-                </li>
+                  <Poster person={elem} />
+                </p>
               );
             })}
-          </ul>
+          </div>
         </div>
       )}
     </div>
   );
 };
 
-const ProfileCard = ({ person }) => {
+const Poster = ({ person }) => {
+  const roleFinder = (role) => {
+    switch (role) {
+      case 1:
+        return "student";
+      case 2:
+        return "professor";
+      case 3:
+        return "reviewer";
+    }
+  };
+
   return (
-    <p className="container">
-      <p className="card" style={{ float: "left" }}>
-        <img
+    <div className="poster-container">
+      <div className="poster-imgcontainer">
+        <div
+          className="poster-img"
           style={{
-            height: "70px",
-            width: "70px",
-            borderRadius: "50%",
-            margin: "auto auto 15px",
-            display: "block",
+            backgroundImage: person.img
+              ? `url(${person.img})`
+              : `url(${avator})`,
           }}
-          src="https://i.pinimg.com/originals/e2/c7/ba/e2c7ba0ef1467ac03b077275e14a9247.jpg"
         />
-        <p>{person.name}</p>
-        <p style={{ color: "gray" }}>Profile</p>
-      </p>
-    </p>
+      </div>
+      <div className="d-flex flex-column align-items-center">
+        <span className="poster-title">{person.name}</span>
+        <span className="poster-year">{`${roleFinder(person.role)}`}</span>
+      </div>
+    </div>
   );
 };
 
