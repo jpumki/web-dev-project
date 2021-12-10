@@ -44,7 +44,7 @@ const Search = () => {
 
   return (
     <div>
-      <form className="search-form mx-1 mt-2" onSubmit={handleSubmit}>
+      <form className="search-form mt-2" onSubmit={handleSubmit}>
         <input
           className="search-input"
           placeholder="Search Movies or TV Shows..."
