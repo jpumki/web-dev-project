@@ -253,12 +253,27 @@ const ProfileDetail = ({ profile, user, id }) => {
         return "reviewer";
     }
   };
+
   const onChange = (event) => {
     const {
       target: { name, value },
     } = event;
     if (name == "name") {
       setProfileName(value);
+    }
+  };
+
+  const physicalAddress = () => {
+    if (
+      profile.city == null &&
+      profile.state == null &&
+      profile.country == null
+    ) {
+      return "has not defined yet";
+    } else {
+      return `${profile.city !== null && profile.city + " ·"} ${
+        profile.state !== null && profile.state + " ·"
+      } ${profile.country !== null && profile.country}`;
     }
   };
 
@@ -287,29 +302,80 @@ const ProfileDetail = ({ profile, user, id }) => {
       window.location.reload();
     });
   };
+
   return (
-    <div className="mt-4">
+    <div className="mt-4 account-detail-container">
       <h1 className="fw-bold account-title">Account Detail</h1>
-      <div className="d-flex mt-3">
-        <div className="col-2">Email</div>
-        <div className="col-4">{profile.email}</div>
+      <div className="d-flex mt-3 mb-2">
+        <div className="col-2 fw-bold account-sub">Email</div>
+        <div className="col-4 account-data">{profile.email}</div>
       </div>
-      <div className="d-flex mt-2">
-        <div className="col-2">Role</div>
-        <div className="col-4 text-capitalize">{roleFinder(profile.role)}</div>
-      </div>
-      <div className="d-flex mt-2">
-        <div className="col-2">Description</div>
-        <div className="col-4">{profile.description}</div>
-      </div>
-      {user._id == id && (
-        <button
-          className="btn btn-danger profile-edit-btn d-flex justify-content-center align-items-center"
-          onClick={handleShow}
-        >
-          Edit Profile
-        </button>
+
+      {profile.phone !== null && (
+        <div className="d-flex mt-2">
+          <div className="col-2 fw-bold account-sub">Phone</div>
+          <div className="col-4 text-capitalize account-data">
+            {profile.phone}
+          </div>
+        </div>
       )}
+
+      {profile.birthdate !== null && (
+        <div className="d-flex mt-2">
+          <div className="col-2 fw-bold account-sub">Birthday</div>
+          <div className="col-4 text-capitalize account-data">
+            {profile.birthdate}
+          </div>
+        </div>
+      )}
+
+      <div className="d-flex mt-2">
+        <div className="col-2 fw-bold account-sub">Address</div>
+        <div className="col-4 text-capitalize account-data">
+          {physicalAddress()}
+        </div>
+      </div>
+
+      <div className="d-flex mt-2">
+        <div className="col-2 fw-bold account-sub">Role</div>
+        <div className="col-4 text-capitalize account-data">
+          {roleFinder(profile.role)}
+        </div>
+      </div>
+
+      {(profile.role == 1 || profile.role == 2) && profile.school !== null && (
+        <div className="d-flex mt-2">
+          <div className="col-2 fw-bold account-sub">School</div>
+          <div className="col-4 text-capitalize account-data">
+            {profile.school}
+          </div>
+        </div>
+      )}
+
+      {profile.role == 3 && profile.company !== null && (
+        <div className="d-flex mt-2">
+          <div className="col-2 fw-bold account-sub">Company</div>
+          <div className="col-4 text-capitalize account-data">
+            {profile.company}
+          </div>
+        </div>
+      )}
+
+      <div className="d-flex mt-2">
+        <div className="col-2 fw-bold account-sub">Description</div>
+        <div className="col-4 account-data">{profile.description}</div>
+      </div>
+      <div className="d-flex justify-content-end">
+        {user._id == id && (
+          <button
+            className="btn btn-danger profile-edit-btn d-flex justify-content-center align-items-center"
+            onClick={handleShow}
+          >
+            Edit Profile
+          </button>
+        )}
+      </div>
+
       <Modal
         show={show}
         onHide={handleClose}
@@ -317,7 +383,7 @@ const ProfileDetail = ({ profile, user, id }) => {
         aria-labelledby="contained-modal-title-vcenter"
         centered
       >
-        <div>
+        <div className="detail-modal">
           <h1>Edit Profile</h1>
           <div>
             <div className="login-label">Name</div>
@@ -331,12 +397,20 @@ const ProfileDetail = ({ profile, user, id }) => {
               onChange={onChange}
             />
           </div>
-          <button
-            className="btn btn-danger profile-edit-btn d-flex justify-content-center align-items-center"
-            onClick={onSubmitChange}
-          >
-            Save Changes
-          </button>
+          <div className="d-flex justify-content-end">
+            <button
+              className="m-2 btn btn-secondary profile-edit-btn d-flex justify-content-center align-items-center"
+              onClick={handleClose}
+            >
+              Cancel Change
+            </button>
+            <button
+              className="m-2 btn btn-danger profile-edit-btn d-flex justify-content-center align-items-center"
+              onClick={onSubmitChange}
+            >
+              Save Changes
+            </button>
+          </div>
         </div>
       </Modal>
     </div>
@@ -345,7 +419,6 @@ const ProfileDetail = ({ profile, user, id }) => {
 
 const ProfileFollowerCard = ({ profile }) => {
   const gotoProfile = (id) => {
-    debugger;
     window.location.href = `/profile/${id}`;
   };
 
@@ -369,7 +442,6 @@ const ProfileFollowerCard = ({ profile }) => {
 
 const ProfileFollowingCard = ({ profile }) => {
   const gotoProfile = (id) => {
-    debugger;
     window.location.href = `/profile/${id}`;
   };
 
