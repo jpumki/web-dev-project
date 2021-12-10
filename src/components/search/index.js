@@ -44,7 +44,7 @@ const Search = () => {
 
   return (
     <div>
-      <form className="search-form" onSubmit={handleSubmit}>
+      <form className="search-form mx-1 mt-2" onSubmit={handleSubmit}>
         <input
           className="search-input"
           placeholder="Search Movies or TV Shows..."
@@ -91,7 +91,7 @@ const Search = () => {
 
 const Section = ({ title, children }) => {
   return (
-    <div className="section-container">
+    <div className="section-container mx-1">
       <span className="section-title">{title}</span>
       <div className="section-grid">{children}</div>
     </div>

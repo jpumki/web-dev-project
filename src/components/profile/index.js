@@ -214,7 +214,7 @@ const ProfileBrowser = ({ profile }) => {
           );
         })}
       </div>
-      <div className="profile-info-container">
+      <div className="profile-info-container" id="scroll-style">
         {profileTabInfo.map((elem) => {
           return <div>{elem.key === tab && elem.contents}</div>;
         })}
@@ -312,8 +312,8 @@ const MovieCard = ({ profile }) => {
                     </div>
                     <div className="d-flex justify-content-center flex-column mt-2">
                       <span className="fw-bold">
-                        {movie.name.length > 20
-                          ? `${movie.name.substring(0, 20)}...`
+                        {movie.name.length > 13
+                          ? `${movie.name.substring(0, 13)}...`
                           : movie.name}
                       </span>
                       <span className="movie-year">
