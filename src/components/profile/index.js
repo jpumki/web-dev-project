@@ -260,6 +260,24 @@ const ProfileDetail = ({ profile, user, id }) => {
     } = event;
     if (name == "name") {
       setProfileName(value);
+    } else if (name === "phone") {
+      setPhone(value);
+    } else if (name === "role") {
+      setRole(value);
+    } else if (name === "birthday") {
+      setBirthdate(value);
+    } else if (name === "city") {
+      setCity(value);
+    } else if (name === "state") {
+      setState(value);
+    } else if (name === "country") {
+      setCountry(value);
+    } else if (name === "school") {
+      setSchool(value);
+    } else if (name === "company") {
+      setCompany(value);
+    } else if (name === "description") {
+      setDescription(value);
     }
   };
 
@@ -324,7 +342,7 @@ const ProfileDetail = ({ profile, user, id }) => {
         <div className="d-flex mt-2">
           <div className="col-2 fw-bold account-sub">Birthday</div>
           <div className="col-4 text-capitalize account-data">
-            {profile.birthdate}
+            {profile.birthdate.substring(0, 10)}
           </div>
         </div>
       )}
@@ -384,33 +402,144 @@ const ProfileDetail = ({ profile, user, id }) => {
         centered
       >
         <div className="detail-modal">
-          <h1>Edit Profile</h1>
-          <div>
-            <div className="login-label">Name</div>
-            <input
-              name="name"
-              type="text"
-              value={profilename}
-              className="login-input"
-              placeholder="Name"
-              required
-              onChange={onChange}
-            />
-          </div>
-          <div className="d-flex justify-content-end">
-            <button
-              className="m-2 btn btn-secondary profile-edit-btn d-flex justify-content-center align-items-center"
-              onClick={handleClose}
-            >
-              Cancel Change
-            </button>
-            <button
-              className="m-2 btn btn-danger profile-edit-btn d-flex justify-content-center align-items-center"
-              onClick={onSubmitChange}
-            >
-              Save Changes
-            </button>
-          </div>
+          <Modal.Header closeButton>
+            <Modal.Title>Edit Profile</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <div className="row">
+              <div className="d-flex align-items-center  col-6">
+                <div>Name</div>
+                <input
+                  name="name"
+                  type="text"
+                  value={profilename}
+                  placeholder="Name"
+                  required
+                  onChange={onChange}
+                />
+              </div>
+              <div className="d-flex align-items-center  col-6">
+                <div>Role</div>
+                <input
+                  name="role"
+                  type="text"
+                  value={role}
+                  placeholder="Name"
+                  required
+                  onChange={onChange}
+                />
+              </div>
+            </div>
+            <div className="row">
+              {role == 3 ? (
+                <div className="d-flex  flex-column col-4">
+                  <div>Company</div>
+                  <input
+                    name="company"
+                    type="text"
+                    value={company}
+                    placeholder="Company"
+                    required
+                    onChange={onChange}
+                  />
+                </div>
+              ) : (
+                <div className="d-flex  flex-column col-4">
+                  <div>School</div>
+                  <input
+                    name="school"
+                    type="text"
+                    value={school}
+                    placeholder="School"
+                    required
+                    onChange={onChange}
+                  />
+                </div>
+              )}
+              <div className="d-flex  flex-column col-4">
+                <div>Phone Number</div>
+                <input
+                  name="phone"
+                  type="tel"
+                  value={phone}
+                  placeholder="Name"
+                  required
+                  onChange={onChange}
+                />
+              </div>
+              <div className="d-flex  flex-column col-4">
+                <div>Birthday</div>
+                <input
+                  name="birthday"
+                  type="date"
+                  value={birthDate}
+                  required
+                  onChange={onChange}
+                />
+              </div>
+            </div>
+            <div className="row">
+              <div className="d-flex flex-column col-4">
+                <div>City</div>
+                <input
+                  name="city"
+                  type="text"
+                  value={city}
+                  placeholder="City"
+                  required
+                  onChange={onChange}
+                />
+              </div>
+              <div className="d-flex  flex-column col-4">
+                <div>State</div>
+                <input
+                  name="state"
+                  type="text"
+                  value={state}
+                  placeholder="State"
+                  required
+                  onChange={onChange}
+                />
+              </div>
+              <div className="d-flex  flex-column col-4">
+                <div>Country</div>
+                <input
+                  name="country"
+                  type="text"
+                  value={country}
+                  placeholder="Country"
+                  required
+                  onChange={onChange}
+                />
+              </div>
+            </div>
+
+            <div className="d-flex flex-column">
+              <div>Description</div>
+              <textarea
+                value={description}
+                name="description"
+                placeholder="Describe your self in here ..."
+                onChange={onChange}
+              />
+            </div>
+          </Modal.Body>
+          <Modal.Footer>
+            <div className="d-flex justify-content-end">
+              <button
+                className="m-2 btn btn-secondary profile-edit-btn d-flex justify-content-center align-items-center"
+                onClick={handleClose}
+              >
+                Cancel Change
+              </button>
+              <button
+                className="m-2 btn btn-danger profile-edit-btn d-flex justify-content-center align-items-center"
+                onClick={onSubmitChange}
+              >
+                Save Changes
+              </button>
+            </div>
+          </Modal.Footer>
         </div>
       </Modal>
     </div>
