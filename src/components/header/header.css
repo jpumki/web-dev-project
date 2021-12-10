@@ -46,3 +46,7 @@ button {
 .header-link:hover {
   transform: translateY(-3px);
 }
+
+.selected-tab {
+  border-bottom: 2px solid #bb2d3b;
+}

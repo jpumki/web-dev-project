@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import "./profile.css";
 import service from "../../service/service";
 import { useParams } from "react-router-dom";
-import avatar from "../../assets/avatar.png";
+import { BigHead } from "@bigheads/core";
+import { getRandomOptions } from "../../utils/bigheadGen";
 import popcorn from "../../assets/noPosterSmall.png";
 const Profile = ({ auth }) => {
   const [profile, setProfile] = useState();
@@ -112,7 +113,7 @@ const Profile = ({ auth }) => {
               onClickUnFollow={onClickUnFollow}
             />
           </div>
-          <div className="mt-4">
+          <div className="mt-3">
             <ProfileBrowser profile={profile} />
           </div>
           <div>
@@ -133,39 +134,40 @@ const ProfileHeader = ({
   onClickUnFollow,
 }) => {
   return (
-    <div className="d-flex align-items-baseline">
-      <div>
-        <img src={avatar} className="profile-avatar" />
+    <div className="d-flex">
+      <div className="profile-avatar">
+        <BigHead {...getRandomOptions()} />
       </div>
-      <span>{profile.name}</span>
-      <div>
-        <img />
-        <span>Member Since {profile.date.substring(0, 4)}</span>
-      </div>
-      <div>
-        {user._id !== id && (
-          <>
-            {follow ? (
-              <button
-                className="btn btn-danger follow-btn"
-                onClick={() => {
-                  onClickUnFollow();
-                }}
-              >
-                Unfollow
-              </button>
-            ) : (
-              <button
-                className="btn btn-danger follow-btn"
-                onClick={() => {
-                  onClickFollow();
-                }}
-              >
-                Follow
-              </button>
-            )}
-          </>
-        )}
+      <div className="d-flex align-items-baseline flex-column justify-content-end">
+        <span className="profile-name fw-bold mb-1">{profile.name}</span>
+        <div className="profile-year mb-2">
+          <span>Member Since {profile.date.substring(0, 4)}</span>
+        </div>
+        <div>
+          {user._id !== id && (
+            <>
+              {follow ? (
+                <button
+                  className="btn btn-danger follow-btn"
+                  onClick={() => {
+                    onClickUnFollow();
+                  }}
+                >
+                  Unfollow
+                </button>
+              ) : (
+                <button
+                  className="btn btn-danger follow-btn"
+                  onClick={() => {
+                    onClickFollow();
+                  }}
+                >
+                  Follow
+                </button>
+              )}
+            </>
+          )}
+        </div>
       </div>
     </div>
   );
@@ -233,21 +235,61 @@ const ProfileDetail = ({ profile }) => {
 };
 
 const ProfileFollowerCard = ({ profile }) => {
-  return <div>Follower</div>;
+  const gotoProfile = (id) => {
+    debugger;
+    window.location.href = `/profile/${id}`;
+  };
+
+  return (
+    <div className="section-grid mt-0">
+      {profile.followers.map((elem) => {
+        return (
+          <p
+            className="person-container cursor-pointer mt-3 mx-2"
+            onClick={() => {
+              gotoProfile(elem.id);
+            }}
+          >
+            <Poster person={elem} />
+          </p>
+        );
+      })}
+    </div>
+  );
 };
 
 const ProfileFollowingCard = ({ profile }) => {
-  return <div>Following</div>;
+  const gotoProfile = (id) => {
+    debugger;
+    window.location.href = `/profile/${id}`;
+  };
+
+  return (
+    <div className="section-grid mt-0">
+      {profile.followings.map((elem) => {
+        return (
+          <p
+            className="person-container cursor-pointer mt-3 mx-2"
+            onClick={() => {
+              gotoProfile(elem.id);
+            }}
+          >
+            <Poster person={elem} />
+          </p>
+        );
+      })}
+    </div>
+  );
 };
 
 const MovieCard = ({ profile }) => {
   return (
     <div>
       {profile.movieList.length > 0 && (
-        <ul className="flex-wrap">
+        <div className="section-grid mt-3">
           {profile.movieList.map((movie) => {
             return (
-              <li className="col-2 mt-4 mb-2 h-100 cursor-pointer card-container">
+              <p className="mx-2 cursor-pointer card-container">
                 <a
                   href={
                     movie.type === 0
@@ -278,11 +320,45 @@ const MovieCard = ({ profile }) => {
                     </div>
                   </div>
                 </a>
-              </li>
+              </p>
             );
           })}
-        </ul>
+        </div>
       )}
+    </div>
+  );
+};
+
+const Poster = ({ person }) => {
+  var randomColor = "#" + (((1 << 24) * Math.random()) | 0).toString(16);
+
+  const roleFinder = (role) => {
+    switch (role) {
+      case 1:
+        return "student";
+      case 2:
+        return "professor";
+      case 3:
+        return "reviewer";
+    }
+  };
+
+  return (
+    <div className="poster-container ">
+      <div className="poster-imgcontainer">
+        <div
+          className="poster-img d-flex justify-content-center align-items-center"
+          style={{ backgroundColor: `${randomColor}` }}
+        >
+          <BigHead {...getRandomOptions()} />
+        </div>
+      </div>
+      <div className="d-flex flex-column align-items-center">
+        <span className="poster-title fw-bold">{person.name}</span>
+        <span className="poster-role text-capitalize">{`${roleFinder(
+          person.role
+        )}`}</span>
+      </div>
     </div>
   );
 };

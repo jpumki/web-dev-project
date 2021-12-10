@@ -1,15 +1,26 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import "./header.css";
 
 const Header = ({ auth }) => {
   const [isLoggin, setIsLoggin] = useState(false);
   const [user, setUser] = useState();
   const [init, setInit] = useState(false);
+  const [tab, setTab] = useState("");
 
   const onLogOutClick = () => {
     auth.signOut();
   };
+
+  const onTabClick = (tab) => {
+    setTab(tab);
+  };
+
+  const navTabs = [
+    { key: "home", link: "/" },
+    { key: "people", link: "/people" },
+    { key: "search", link: "/search" },
+  ];
 
   useEffect(() => {
     async function userInfo() {
@@ -23,26 +34,40 @@ const Header = ({ auth }) => {
         }
       });
     }
+
+    const getNavigator = () => {
+      console.log(window.location.pathname);
+      if (window.location.pathname == "/") {
+        setTab("home");
+      } else {
+        setTab(window.location.pathname.substring(1));
+      }
+    };
     userInfo();
+    getNavigator();
   }, []);
   return (
     <header>
       <ul className="d-flex w-100">
-        <li className="cursor-pointer">
-          <Link className="header-link" to="/">
-            Home
-          </Link>
-        </li>
-        <li className="cursor-pointer">
-          <Link className="header-link" to="/people">
-            People
-          </Link>
-        </li>
-        <li className="cursor-pointer">
-          <Link className="header-link" to="/search">
-            Search
-          </Link>
-        </li>
+        {navTabs.map((elem) => {
+          return (
+            <li className="cursor-pointer mx-2 ">
+              <Link
+                name={`${elem.key}`}
+                onClick={(e) => {
+                  onTabClick(e.target.name);
+                }}
+                className={`header-link text-capitalize ${
+                  tab == elem.key && "selected-tab"
+                }`}
+                to={`${elem.link}`}
+              >
+                {elem.key}
+              </Link>
+            </li>
+          );
+        })}
+
         {!isLoggin ? (
           <div className="w-100 d-flex align-items-center justify-content-end ">
             <Link className="header-link " to="/login">

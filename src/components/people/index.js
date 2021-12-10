@@ -2,7 +2,9 @@ import React, { useState, useEffect } from "react";
 import service from "../../service/service";
 import "./people.css";
 import Swal from "sweetalert2";
-import avator from "../../assets/avatar.png";
+import { BigHead } from "@bigheads/core";
+import { getRandomOptions } from "../../utils/bigheadGen";
+
 const People = ({ auth }) => {
   const [people, setPeople] = useState();
   const [isLogginIn, setIsLoggin] = useState(false);
@@ -65,6 +67,8 @@ const People = ({ auth }) => {
 };
 
 const Poster = ({ person }) => {
+  var randomColor = "#" + (((1 << 24) * Math.random()) | 0).toString(16);
+
   const roleFinder = (role) => {
     switch (role) {
       case 1:
@@ -80,17 +84,17 @@ const Poster = ({ person }) => {
     <div className="poster-container">
       <div className="poster-imgcontainer">
         <div
-          className="poster-img"
-          style={{
-            backgroundImage: person.img
-              ? `url(${person.img})`
-              : `url(${avator})`,
-          }}
-        />
+          className="poster-img d-flex justify-content-center align-items-center"
+          style={{ backgroundColor: `${randomColor}` }}
+        >
+          <BigHead {...getRandomOptions()} />
+        </div>
       </div>
       <div className="d-flex flex-column align-items-center">
-        <span className="poster-title">{person.name}</span>
-        <span className="poster-year">{`${roleFinder(person.role)}`}</span>
+        <span className="poster-title fw-bold">{person.name}</span>
+        <span className="poster-role text-capitalize">{`${roleFinder(
+          person.role
+        )}`}</span>
       </div>
     </div>
   );

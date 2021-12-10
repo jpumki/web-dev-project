@@ -1,27 +1,33 @@
 .profile-avatar {
-  width: 70px;
-  height: 70px;
+  width: 110px;
+  height: 110px;
   border-radius: 50%;
 }
 
+.profile-name {
+  font-size: 25px;
+}
+
+.profile-year {
+  color: gray;
+}
 .follow-btn {
-  position: relative;
-  bottom: 8px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .profile-info-container {
-  width: 90%;
+  width: 100%;
   border: 1px solid gray;
   height: 275.5px;
   overflow-y: scroll;
 }
 
+
 .movie-card-img {
-  width: 150px;
-  height: 200px;
+  width: 120px;
+  height: 170px;
   border-radius: 10px;
 }
 
