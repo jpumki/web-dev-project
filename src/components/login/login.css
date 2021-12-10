@@ -47,7 +47,7 @@
   line-height: 30px;
 }
 
-select {
+.login-select{
   appearance: none;
   outline: 0;
   border: 0;

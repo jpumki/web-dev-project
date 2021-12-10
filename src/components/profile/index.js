@@ -258,11 +258,13 @@ const ProfileDetail = ({ profile, user, id }) => {
     const {
       target: { name, value },
     } = event;
+    debugger;
     if (name == "name") {
       setProfileName(value);
     } else if (name === "phone") {
       setPhone(value);
     } else if (name === "role") {
+      console.log(parseInt(value));
       setRole(value);
     } else if (name === "birthday") {
       setBirthdate(value);
@@ -296,7 +298,6 @@ const ProfileDetail = ({ profile, user, id }) => {
   };
 
   const onSubmitChange = () => {
-    debugger;
     const copyProfile = profile;
     const editProfile = {
       ...copyProfile,
@@ -408,8 +409,9 @@ const ProfileDetail = ({ profile, user, id }) => {
           <Modal.Body>
             <div className="row">
               <div className="d-flex align-items-center  col-6">
-                <div>Name</div>
+                <div className="edit-label me-2">Name</div>
                 <input
+                  className="form-control"
                   name="name"
                   type="text"
                   value={profilename}
@@ -419,22 +421,27 @@ const ProfileDetail = ({ profile, user, id }) => {
                 />
               </div>
               <div className="d-flex align-items-center  col-6">
-                <div>Role</div>
-                <input
+                <div className="edit-label me-2">Role</div>
+                <select
+                  className="form-control"
                   name="role"
-                  type="text"
-                  value={role}
-                  placeholder="Name"
-                  required
                   onChange={onChange}
-                />
+                >
+                  <option selected disabled hidden>
+                    Choose here
+                  </option>
+                  <option value="1">Student</option>
+                  <option value="2">Professor</option>
+                  <option value="3">Reviewer</option>
+                </select>
               </div>
             </div>
             <div className="row">
               {role == 3 ? (
                 <div className="d-flex  flex-column col-4">
-                  <div>Company</div>
+                  <div className="edit-label my-2">Company</div>
                   <input
+                    className="form-control"
                     name="company"
                     type="text"
                     value={company}
@@ -445,8 +452,9 @@ const ProfileDetail = ({ profile, user, id }) => {
                 </div>
               ) : (
                 <div className="d-flex  flex-column col-4">
-                  <div>School</div>
+                  <div className="edit-label my-2">School</div>
                   <input
+                    className="form-control"
                     name="school"
                     type="text"
                     value={school}
@@ -457,8 +465,9 @@ const ProfileDetail = ({ profile, user, id }) => {
                 </div>
               )}
               <div className="d-flex  flex-column col-4">
-                <div>Phone Number</div>
+                <div className="edit-label my-2">Phone Number</div>
                 <input
+                  className="form-control"
                   name="phone"
                   type="tel"
                   value={phone}
@@ -468,8 +477,9 @@ const ProfileDetail = ({ profile, user, id }) => {
                 />
               </div>
               <div className="d-flex  flex-column col-4">
-                <div>Birthday</div>
+                <div className="edit-label my-2">Birthday</div>
                 <input
+                  className="form-control"
                   name="birthday"
                   type="date"
                   value={birthDate}
@@ -480,8 +490,9 @@ const ProfileDetail = ({ profile, user, id }) => {
             </div>
             <div className="row">
               <div className="d-flex flex-column col-4">
-                <div>City</div>
+                <div className="edit-label my-2">City</div>
                 <input
+                  className="form-control"
                   name="city"
                   type="text"
                   value={city}
@@ -491,8 +502,9 @@ const ProfileDetail = ({ profile, user, id }) => {
                 />
               </div>
               <div className="d-flex  flex-column col-4">
-                <div>State</div>
+                <div className="edit-label my-2">State</div>
                 <input
+                  className="form-control"
                   name="state"
                   type="text"
                   value={state}
@@ -502,8 +514,9 @@ const ProfileDetail = ({ profile, user, id }) => {
                 />
               </div>
               <div className="d-flex  flex-column col-4">
-                <div>Country</div>
+                <div className="edit-label my-2"> Country</div>
                 <input
+                  className="form-control"
                   name="country"
                   type="text"
                   value={country}
@@ -515,8 +528,9 @@ const ProfileDetail = ({ profile, user, id }) => {
             </div>
 
             <div className="d-flex flex-column">
-              <div>Description</div>
+              <div className="edit-label my-2">Description</div>
               <textarea
+                className="form-control"
                 value={description}
                 name="description"
                 placeholder="Describe your self in here ..."

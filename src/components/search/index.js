@@ -119,7 +119,7 @@ const Poster = ({ id, imageUrl, title, rating, year, isMovie = false }) => {
           </span>
         </div>
         <span className="poster-title">
-          {title.length > 18 ? `${title.substring(0, 18)}...` : title}
+          {title.length > 15 ? `${title.substring(0, 15)}...` : title}
         </span>
         <span className="poster-year">{year}</span>
       </div>

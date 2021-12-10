@@ -217,8 +217,9 @@ const SignIn = ({ auth }) => {
 
           <div className="login-label">Choose Your Role</div>
 
-          <div class="select">
+          <div className="select">
             <select
+            className="login-select"
               onChange={(e) => {
                 setRole(e.target.value);
               }}
