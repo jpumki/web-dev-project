@@ -58,6 +58,7 @@ const Profile = ({ auth }) => {
     const newFollower = {
       id: user._id,
       name: user.name,
+      role: user.role,
     };
     newProfile.followers.push(newFollower);
     service.handleFollower(newProfile);
@@ -66,6 +67,7 @@ const Profile = ({ auth }) => {
     const newFollowing = {
       id: profile._id,
       name: profile.name,
+      role: user.role,
     };
     newUser.followings.push(newFollowing);
     service.handleFollowing(newUser);
