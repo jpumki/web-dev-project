@@ -121,7 +121,7 @@ const Profile = ({ auth }) => {
             <ProfileBrowser profile={profile} />
           </div>
           <div>
-            <ProfileDetail profile={profile} />
+            <ProfileDetail profile={profile} user={user} id={id} />
           </div>
         </div>
       )}
@@ -227,7 +227,7 @@ const ProfileBrowser = ({ profile }) => {
   );
 };
 
-const ProfileDetail = ({ profile }) => {
+const ProfileDetail = ({ profile, user, id }) => {
   const [show, setShow] = useState(false);
 
   const [profilename, setProfileName] = useState(profile.name);
@@ -302,12 +302,14 @@ const ProfileDetail = ({ profile }) => {
         <div className="col-2">Description</div>
         <div className="col-4">{profile.description}</div>
       </div>
-      <button
-        className="btn btn-danger profile-edit-btn d-flex justify-content-center align-items-center"
-        onClick={handleShow}
-      >
-        Edit Profile
-      </button>
+      {user._id == id && (
+        <button
+          className="btn btn-danger profile-edit-btn d-flex justify-content-center align-items-center"
+          onClick={handleShow}
+        >
+          Edit Profile
+        </button>
+      )}
       <Modal
         show={show}
         onHide={handleClose}
