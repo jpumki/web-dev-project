@@ -198,13 +198,15 @@ const ProfileBrowser = ({ profile }) => {
   ];
 
   return (
-    <div>
+    <div className="mt-4 pt-2">
       <div>
         {tabs.map((elem) => {
           return (
             <button
               name={elem}
-              className={`text-capitalize ${elem == tab && "selected"}`}
+              className={`text-capitalize profile-btn ${
+                elem == tab && "selected"
+              }`}
               onClick={(e) => {
                 onClickTab(e.target.name);
               }}
@@ -225,8 +227,8 @@ const ProfileBrowser = ({ profile }) => {
 
 const ProfileDetail = ({ profile }) => {
   return (
-    <div>
-      <h1>Account</h1>
+    <div className="mt-4">
+      <h1 className="fw-bold account-title">Account Detail</h1>
       <div>
         <div></div>
         <div></div>

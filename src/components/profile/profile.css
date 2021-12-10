@@ -19,10 +19,10 @@
 
 .profile-info-container {
   width: 95%;
-  border: 2px solid gray;
+  border: 1.5px solid gray;
   height: 240px;
   overflow-y: scroll;
-  border-radius: 5px;
+  border-radius: 0px 0px 5px 5px;
 }
 
 .movie-card-img {
@@ -56,4 +56,26 @@
 
 #scroll-style::-webkit-scrollbar-thumb {
   background-color: #dc3545;
+}
+
+.selected {
+  background-color: #dc3545 !important;
+}
+
+.profile-btn {
+  background-color: #f7a8af;
+  color: white;
+  font-weight: bold;
+  border: 1.5px solid gray;
+  border-bottom: 0px;
+  border-radius: 2px 5px 0px 0px;
+  margin-right: 2px;
+}
+
+.profile-btn:hover {
+  opacity: 0.6;
+}
+
+.account-title {
+  font-size: 25px;
 }
