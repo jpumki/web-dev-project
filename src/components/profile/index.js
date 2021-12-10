@@ -5,6 +5,8 @@ import { useParams } from "react-router-dom";
 import { BigHead } from "@bigheads/core";
 import { getRandomOptions } from "../../utils/bigheadGen";
 import popcorn from "../../assets/noPosterSmall.png";
+import { Modal } from "react-bootstrap";
+import Swal from "sweetalert2";
 const Profile = ({ auth }) => {
   const [profile, setProfile] = useState();
   const [initProfile, setInitProfile] = useState(false);
@@ -226,14 +228,115 @@ const ProfileBrowser = ({ profile }) => {
 };
 
 const ProfileDetail = ({ profile }) => {
+  const [show, setShow] = useState(false);
+
+  const [profilename, setProfileName] = useState(profile.name);
+  const [phone, setPhone] = useState(profile.phone);
+  const [role, setRole] = useState(profile.role);
+  const [birthDate, setBirthdate] = useState(profile.birthDate);
+  const [city, setCity] = useState(profile.city);
+  const [state, setState] = useState(profile.state);
+  const [country, setCountry] = useState(profile.country);
+  const [school, setSchool] = useState(profile.school);
+  const [company, setCompany] = useState(profile.company);
+  const [description, setDescription] = useState(profile.description);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+  const roleFinder = (role) => {
+    switch (role) {
+      case 1:
+        return "student";
+      case 2:
+        return "professor";
+      case 3:
+        return "reviewer";
+    }
+  };
+  const onChange = (event) => {
+    const {
+      target: { name, value },
+    } = event;
+    if (name == "name") {
+      setProfileName(value);
+    }
+  };
+
+  const onSubmitChange = () => {
+    debugger;
+    const copyProfile = profile;
+    const editProfile = {
+      ...copyProfile,
+      name: profilename,
+      role: role,
+      birthdate: birthDate,
+      phone: phone,
+      city: city,
+      state: state,
+      country: country,
+      school: school,
+      company: company,
+      description: description,
+    };
+    service.editProfile(editProfile);
+    handleClose();
+    Swal.fire({
+      icon: "success",
+      title: "Your change has been made",
+    }).then(() => {
+      window.location.reload();
+    });
+  };
   return (
     <div className="mt-4">
       <h1 className="fw-bold account-title">Account Detail</h1>
-      <div>
-        <div></div>
-        <div></div>
-        <div></div>
+      <div className="d-flex mt-3">
+        <div className="col-2">Email</div>
+        <div className="col-4">{profile.email}</div>
       </div>
+      <div className="d-flex mt-2">
+        <div className="col-2">Role</div>
+        <div className="col-4 text-capitalize">{roleFinder(profile.role)}</div>
+      </div>
+      <div className="d-flex mt-2">
+        <div className="col-2">Description</div>
+        <div className="col-4">{profile.description}</div>
+      </div>
+      <button
+        className="btn btn-danger profile-edit-btn d-flex justify-content-center align-items-center"
+        onClick={handleShow}
+      >
+        Edit Profile
+      </button>
+      <Modal
+        show={show}
+        onHide={handleClose}
+        size="lg"
+        aria-labelledby="contained-modal-title-vcenter"
+        centered
+      >
+        <div>
+          <h1>Edit Profile</h1>
+          <div>
+            <div className="login-label">Name</div>
+            <input
+              name="name"
+              type="text"
+              value={profilename}
+              className="login-input"
+              placeholder="Name"
+              required
+              onChange={onChange}
+            />
+          </div>
+          <button
+            className="btn btn-danger profile-edit-btn d-flex justify-content-center align-items-center"
+            onClick={onSubmitChange}
+          >
+            Save Changes
+          </button>
+        </div>
+      </Modal>
     </div>
   );
 };

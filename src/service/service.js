@@ -15,6 +15,16 @@ export const createProfile = (profile) =>
     },
   }).then((response) => response.json());
 
+export const editProfile = (profile) => {
+  fetch(`${URL}/${profile._id}`, {
+    method: "PUT",
+    body: JSON.stringify(profile),
+    headers: {
+      "content-type": "application/json",
+    },
+  }).then((response) => response.json());
+};
+
 export const handleFilm = (profile) => {
   fetch(`${URL}/${profile._id}/movie`, {
     method: "PUT",
@@ -48,6 +58,7 @@ export const handleFollowing = (profile) => {
 export default {
   findProfileById,
   findAllProfile,
+  editProfile,
   createProfile,
   handleFilm,
   handleFollower,

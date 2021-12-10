@@ -85,8 +85,7 @@ const Header = ({ auth }) => {
                     MyProfile
                   </div>
                 </a>
-
-                <div className="col-1 mx-2" onClick={onLogOutClick}>
+                <div className="mx-2" onClick={onLogOutClick}>
                   <button className="fw-bold btn btn-danger w-100 d-flex justify-content-center align-items-center cursor-pointer">
                     Sign Out
                   </button>
