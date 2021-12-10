@@ -339,7 +339,7 @@ const ProfileDetail = ({ profile, user, id }) => {
         </div>
       )}
 
-      {profile.birthdate !== null && (
+      {profile.birthdate !== null  && (
         <div className="d-flex mt-2">
           <div className="col-2 fw-bold account-sub">Birthday</div>
           <div className="col-4 text-capitalize account-data">
@@ -471,7 +471,7 @@ const ProfileDetail = ({ profile, user, id }) => {
                   name="phone"
                   type="tel"
                   value={phone}
-                  placeholder="Name"
+                  placeholder="Phone Number"
                   required
                   onChange={onChange}
                 />
@@ -530,7 +530,7 @@ const ProfileDetail = ({ profile, user, id }) => {
             <div className="d-flex flex-column">
               <div className="edit-label my-2">Description</div>
               <textarea
-                className="form-control"
+                className="form-control profile-edit-textbox"
                 value={description}
                 name="description"
                 placeholder="Describe your self in here ..."

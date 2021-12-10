@@ -117,3 +117,7 @@
   font-weight: 600;
   font-size: 17px;
 }
+.profile-edit-textbox {
+  height: 180px;
+  resize: none;
+}
