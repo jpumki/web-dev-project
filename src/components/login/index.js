@@ -135,7 +135,7 @@ const SignIn = ({ auth }) => {
               name="email"
               type="email"
               value={email}
-              className="login-input"
+              className="form-control"
               placeholder="Email"
               required
               onChange={onChange}
@@ -144,7 +144,7 @@ const SignIn = ({ auth }) => {
             <input
               name="password"
               value={password}
-              className="login-input"
+              className="form-control"
               type="password"
               placeholder="Password"
               required
@@ -176,7 +176,7 @@ const SignIn = ({ auth }) => {
             name="name"
             type="text"
             value={name}
-            className="login-input"
+            className="form-control"
             placeholder="Name"
             required
             onChange={onChange}
@@ -187,7 +187,7 @@ const SignIn = ({ auth }) => {
             name="email"
             type="email"
             value={email}
-            className="login-input"
+            className="form-control"
             placeholder="Email"
             required
             onChange={onChange}
@@ -197,7 +197,7 @@ const SignIn = ({ auth }) => {
           <input
             name="password"
             value={password}
-            className="login-input"
+            className="form-control"
             type="password"
             placeholder="Password"
             required
@@ -208,7 +208,7 @@ const SignIn = ({ auth }) => {
           <input
             name="confirmPassword"
             value={confirmPassword}
-            className="login-input"
+            className="form-control"
             type="password"
             placeholder="Password"
             required

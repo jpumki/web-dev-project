@@ -29,7 +29,7 @@
 }
 
 .signin-container {
-  width: 30%;
+  width: calc(100vh - 350px);
   z-index: 3;
   padding: 60px 68px 40px;
   background-color: rgba(0, 0, 0, 0.75);

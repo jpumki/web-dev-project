@@ -133,7 +133,7 @@ const Detail = ({ auth }) => {
                   : result.original_name}
               </h3>
               {isLoggin && (
-                <div className="col-2 mx-3 ">
+                <div className="col-2 mx-3 d-none d-lg-block">
                   {has ? (
                     <button
                       className="btn btn-danger  w-100 d-flex align-items-center justify-content-center cursor-pointer"
@@ -182,9 +182,9 @@ const Detail = ({ auth }) => {
               </span>
             </div>
             <p className="detail-overview">{result.overview}</p>
-            <div className="pt-4">
+            <div className="pt-4 d-none d-md-block">
               {video.results.length > 0 && (
-                <div className="video-responsive">
+                <div className="video-responsive ">
                   <iframe
                     width="560"
                     height="315"
