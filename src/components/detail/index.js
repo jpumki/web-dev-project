@@ -118,7 +118,7 @@ const Detail = ({ auth }) => {
         />
         <div className="detail-content">
           <div
-            className="detail-cover"
+            className="detail-cover d-none d-lg-block "
             style={{
               backgroundImage: result.poster_path
                 ? `url(https://image.tmdb.org/t/p/original${result.poster_path})`
