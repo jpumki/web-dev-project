@@ -121,3 +121,8 @@
   height: 180px;
   resize: none;
 }
+.privacy-link {
+  color: #dc3545;
+  font-size: 15px;
+
+}

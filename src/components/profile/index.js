@@ -326,22 +326,22 @@ const ProfileDetail = ({ profile, user, id }) => {
     <div className="mt-4 account-detail-container">
       <h1 className="fw-bold account-title">Account Detail</h1>
       <div className="d-flex mt-3 mb-2">
-        <div className="col-2 fw-bold account-sub">Email</div>
+        <div className="col-3 fw-bold account-sub">Email</div>
         <div className="col-4 account-data">{profile.email}</div>
       </div>
 
       {profile.phone !== null && (
         <div className="d-flex mt-2">
-          <div className="col-2 fw-bold account-sub">Phone</div>
+          <div className="col-3 fw-bold account-sub">Phone</div>
           <div className="col-4 text-capitalize account-data">
             {profile.phone}
           </div>
         </div>
       )}
 
-      {profile.birthdate !== null  && (
+      {profile.birthdate !== null && (
         <div className="d-flex mt-2">
-          <div className="col-2 fw-bold account-sub">Birthday</div>
+          <div className="col-3 fw-bold account-sub">Birthday</div>
           <div className="col-4 text-capitalize account-data">
             {profile.birthdate.substring(0, 10)}
           </div>
@@ -349,14 +349,14 @@ const ProfileDetail = ({ profile, user, id }) => {
       )}
 
       <div className="d-flex mt-2">
-        <div className="col-2 fw-bold account-sub">Address</div>
+        <div className="col-3 fw-bold account-sub">Address</div>
         <div className="col-4 text-capitalize account-data">
           {physicalAddress()}
         </div>
       </div>
 
       <div className="d-flex mt-2">
-        <div className="col-2 fw-bold account-sub">Role</div>
+        <div className="col-3 fw-bold account-sub">Role</div>
         <div className="col-4 text-capitalize account-data">
           {roleFinder(profile.role)}
         </div>
@@ -364,7 +364,7 @@ const ProfileDetail = ({ profile, user, id }) => {
 
       {(profile.role == 1 || profile.role == 2) && profile.school !== null && (
         <div className="d-flex mt-2">
-          <div className="col-2 fw-bold account-sub">School</div>
+          <div className="col-3 fw-bold account-sub">School</div>
           <div className="col-4 text-capitalize account-data">
             {profile.school}
           </div>
@@ -373,7 +373,7 @@ const ProfileDetail = ({ profile, user, id }) => {
 
       {profile.role == 3 && profile.company !== null && (
         <div className="d-flex mt-2">
-          <div className="col-2 fw-bold account-sub">Company</div>
+          <div className="col-3 fw-bold account-sub">Company</div>
           <div className="col-4 text-capitalize account-data">
             {profile.company}
           </div>
@@ -381,8 +381,16 @@ const ProfileDetail = ({ profile, user, id }) => {
       )}
 
       <div className="d-flex mt-2">
-        <div className="col-2 fw-bold account-sub">Description</div>
+        <div className="col-3 fw-bold account-sub">Description</div>
         <div className="col-4 account-data">{profile.description}</div>
+      </div>
+
+      <div className="d-flex justify-content-end">
+        <div>
+          <u className="cursor-pointer privacy-link">
+            <a href="/privacy">Privacy Policy</a>
+          </u>
+        </div>
       </div>
       <div className="d-flex justify-content-end">
         {user._id == id && (
@@ -408,7 +416,7 @@ const ProfileDetail = ({ profile, user, id }) => {
           </Modal.Header>
           <Modal.Body>
             <div className="row">
-              <div className="d-flex align-items-center  col-6">
+              <div className="d-flex align-items-center col-6 mb-3">
                 <div className="edit-label me-2">Name</div>
                 <input
                   className="form-control"
