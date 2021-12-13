@@ -18,6 +18,8 @@ const Profile = ({ auth }) => {
   const [chatMode, setChatMode] = useState(false);
   const [newChat, setNewChat] = useState(true);
   const [chatId, setChatId] = useState();
+  const [chatData, setChatData] = useState();
+  const [text, setText] = useState("");
   const { id } = useParams();
 
   const findProfileById = (id, uid) => {
@@ -53,21 +55,34 @@ const Profile = ({ auth }) => {
             }
           }
         }
-
         if (user.chats.length > 0) {
           for (var i = 0; i < user.chats.length; i++) {
-            if (
-              user.chats[i].receiver == id ||
-              user.chats[i].sender == id
-            ) {
+            if (user.chats[i].receiver == id || user.chats[i].sender == id) {
               setNewChat(false);
               setChatId(user.chats[i]._id);
+              service.findChatById(user.chats[i]._id).then((data) => {
+                setChatData(data);
+              });
             }
           }
         }
         setInitUser(true);
       }
     });
+  };
+
+  const onClickSendChat = () => {
+    const newChat = chatData;
+    debugger;
+    const Chat = {
+      chat: text,
+      sender: user._id,
+      receiver: profile._id,
+    };
+    newChat.conversation.push(Chat);
+    service.sendChat(newChat);
+    setText("");
+    setChatData(newChat);
   };
 
   const onClickFollow = () => {
@@ -88,7 +103,6 @@ const Profile = ({ auth }) => {
     };
     newUser.followings.push(newFollowing);
     service.handleFollowing(newUser);
-
     setFollow(true);
   };
 
@@ -102,13 +116,17 @@ const Profile = ({ auth }) => {
     };
 
     service.createChat(newChatforUser);
-
     newUser.chats.push(newChatforUser);
+
     service.handleChat(newUser);
     newProfile.chats.push(newChatforUser);
-    service.handleChat(newProfile);
 
+    service.handleChat(newProfile);
     setNewChat(false);
+
+    service.findChatById(newChatforUser._id).then((data) => {
+      setChatData(data);
+    });
   };
 
   const onClickUnFollow = () => {
@@ -122,7 +140,6 @@ const Profile = ({ auth }) => {
 
     setFollow(false);
   };
-
 
   useEffect(() => {
     async function userInfo() {
@@ -142,6 +159,7 @@ const Profile = ({ auth }) => {
     <div className="m-4">
       {initProfile && initUser && (
         <div>
+          {console.log(chatData)}
           <div>
             <ProfileHeader
               user={user}
@@ -166,8 +184,12 @@ const Profile = ({ auth }) => {
           ) : (
             <div className="mt-4">
               <ChattingRoom
+                chatData={chatData}
                 onClickChatStart={onClickChatStart}
+                onClickSendChat={onClickSendChat}
                 newChat={newChat}
+                setText={setText}
+                text={text}
               />
             </div>
           )}
@@ -177,7 +199,14 @@ const Profile = ({ auth }) => {
   );
 };
 
-const ChattingRoom = ({ newChat, onClickChatStart }) => {
+const ChattingRoom = ({
+  chatData,
+  newChat,
+  onClickChatStart,
+  onClickSendChat,
+  text,
+  setText,
+}) => {
   return (
     <div className="chatting-container">
       <div className="chatting-content-container" id="scroll-style">
@@ -193,15 +222,47 @@ const ChattingRoom = ({ newChat, onClickChatStart }) => {
             </button>
           </div>
         ) : (
-          <div>You Made it</div>
+          <div>
+            {chatData !== undefined && (
+              <>
+                <div>
+                  {chatData.conversation.map((elem) => {
+                    if (chatData.sender == elem.sender) {
+                      return (
+                        <div className="d-flex">
+                          <div className="receiving-chat">{elem.chat}</div>
+                        </div>
+                      );
+                    } else {
+                      return (
+                        <div className="d-flex justify-content-end">
+                          <div className="sending-chat">{elem.chat}</div>
+                        </div>
+                      );
+                    }
+                  })}
+                </div>
+              </>
+            )}
+          </div>
         )}
       </div>
       <div className="chatting-input-container">
         <div className="d-flex justify-content-center align-items-center mx-2">
-          <input className="form-control" />
+          <input
+            className="form-control"
+            placeholder="Type your message"
+            value={text}
+            onChange={(e) => {
+              setText(e.target.value);
+            }}
+          />
           <button
             className="btn btn-success follow-btn ms-3"
-            disabled={newChat == true}
+            disabled={newChat == true || text == ""}
+            onClick={() => {
+              onClickSendChat();
+            }}
           >
             Send
           </button>

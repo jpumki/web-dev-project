@@ -75,6 +75,19 @@ export const createChat = (chat) =>
     },
   }).then((response) => response.json());
 
+export const findChatById = (id) =>
+  fetch(`${ChatURL}/${id}`).then((response) => response.json());
+
+export const sendChat = (chat) => {
+  fetch(`${ChatURL}/${chat._id}`, {
+    method: "PUT",
+    body: JSON.stringify(chat),
+    headers: {
+      "content-type": "application/json",
+    },
+  }).then((response) => response.json());
+};
+
 export default {
   findProfileById,
   findAllProfile,
@@ -84,5 +97,7 @@ export default {
   handleFollower,
   handleFollowing,
   handleChat,
-  createChat
+  createChat,
+  findChatById,
+  sendChat,
 };
