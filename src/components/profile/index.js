@@ -159,7 +159,6 @@ const Profile = ({ auth }) => {
     <div className="m-4">
       {initProfile && initUser && (
         <div>
-          {console.log(chatData)}
           <div>
             <ProfileHeader
               user={user}
@@ -184,6 +183,7 @@ const Profile = ({ auth }) => {
           ) : (
             <div className="mt-4">
               <ChattingRoom
+                  user={user}
                 chatData={chatData}
                 onClickChatStart={onClickChatStart}
                 onClickSendChat={onClickSendChat}
@@ -206,6 +206,7 @@ const ChattingRoom = ({
   onClickSendChat,
   text,
   setText,
+  user
 }) => {
   return (
     <div className="chatting-container">
@@ -227,7 +228,7 @@ const ChattingRoom = ({
               <>
                 <div>
                   {chatData.conversation.map((elem) => {
-                    if (chatData.sender == elem.sender) {
+                    if (user._id !== elem.sender) {
                       return (
                         <div className="d-flex">
                           <div className="receiving-chat">{elem.chat}</div>
