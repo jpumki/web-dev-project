@@ -11,10 +11,12 @@
 .profile-year {
   color: gray;
 }
+
 .follow-btn {
   display: flex;
   justify-content: center;
   align-items: center;
+  width: fit-content;
 }
 
 .profile-info-container {
@@ -112,7 +114,6 @@
   color: black;
 }
 
-
 .edit-label {
   font-weight: 600;
   font-size: 17px;
@@ -124,5 +125,21 @@
 .privacy-link {
   color: #dc3545;
   font-size: 15px;
+}
+.chatting-container {
 
+  border: 1px solid gray;
+  border-radius: 10px;
+  width: 95%;
+  height: 600px;
+}
+
+.chatting-input-container {
+  height: 8%;
+  margin-top: 0.5%;
+ margin-bottom: 0.5%;
+}
+.chatting-content-container {
+  overflow-y: scroll;
+  height: 91%;
 }

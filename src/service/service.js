@@ -1,4 +1,5 @@
 const URL = "http://localhost:4000/profile";
+const ChatURL = "http://localhost:4000/chat";
 
 export const findAllProfile = () =>
   fetch(`${URL}`).then((response) => response.json());
@@ -55,6 +56,25 @@ export const handleFollowing = (profile) => {
   }).then((response) => response.json());
 };
 
+export const handleChat = (profile) => {
+  fetch(`${URL}/${profile._id}/chat`, {
+    method: "PUT",
+    body: JSON.stringify(profile),
+    headers: {
+      "content-type": "application/json",
+    },
+  }).then((response) => response.json());
+};
+
+export const createChat = (chat) =>
+  fetch(ChatURL, {
+    method: "POST",
+    body: JSON.stringify(chat),
+    headers: {
+      "content-type": "application/json",
+    },
+  }).then((response) => response.json());
+
 export default {
   findProfileById,
   findAllProfile,
@@ -63,4 +83,6 @@ export default {
   handleFilm,
   handleFollower,
   handleFollowing,
+  handleChat,
+  createChat
 };

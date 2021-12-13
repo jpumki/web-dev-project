@@ -15,6 +15,9 @@ const Profile = ({ auth }) => {
   const [follow, setFollow] = useState(false);
   const [followerIndex, setFollowerIndex] = useState();
   const [followingIndex, setFollowingIndex] = useState();
+  const [chatMode, setChatMode] = useState(false);
+  const [newChat, setNewChat] = useState(true);
+  const [chatId, setChatId] = useState();
   const { id } = useParams();
 
   const findProfileById = (id, uid) => {
@@ -50,6 +53,18 @@ const Profile = ({ auth }) => {
             }
           }
         }
+
+        if (user.chats.length > 0) {
+          for (var i = 0; i < user.chats.length; i++) {
+            if (
+              user.chats[i].receiver == id ||
+              user.chats[i].sender == id
+            ) {
+              setNewChat(false);
+              setChatId(user.chats[i]._id);
+            }
+          }
+        }
         setInitUser(true);
       }
     });
@@ -77,6 +92,25 @@ const Profile = ({ auth }) => {
     setFollow(true);
   };
 
+  const onClickChatStart = () => {
+    const newUser = user;
+    const newProfile = profile;
+    const newChatforUser = {
+      _id: Math.floor(Math.random() * 9999999).toString(),
+      sender: user._id,
+      receiver: profile._id,
+    };
+
+    service.createChat(newChatforUser);
+
+    newUser.chats.push(newChatforUser);
+    service.handleChat(newUser);
+    newProfile.chats.push(newChatforUser);
+    service.handleChat(newProfile);
+
+    setNewChat(false);
+  };
+
   const onClickUnFollow = () => {
     const newProfile = profile;
     newProfile.followers.splice(followerIndex, 1);
@@ -88,6 +122,7 @@ const Profile = ({ auth }) => {
 
     setFollow(false);
   };
+
 
   useEffect(() => {
     async function userInfo() {
@@ -113,18 +148,65 @@ const Profile = ({ auth }) => {
               profile={profile}
               id={id}
               follow={follow}
+              chatMode={chatMode}
+              setChatMode={setChatMode}
               onClickFollow={onClickFollow}
               onClickUnFollow={onClickUnFollow}
             />
           </div>
-          <div className="mt-3">
-            <ProfileBrowser profile={profile} />
-          </div>
-          <div>
-            <ProfileDetail profile={profile} user={user} id={id} />
-          </div>
+          {chatMode == false ? (
+            <>
+              <div className="mt-3">
+                <ProfileBrowser profile={profile} />
+              </div>
+              <div>
+                <ProfileDetail profile={profile} user={user} id={id} />
+              </div>
+            </>
+          ) : (
+            <div className="mt-4">
+              <ChattingRoom
+                onClickChatStart={onClickChatStart}
+                newChat={newChat}
+              />
+            </div>
+          )}
         </div>
       )}
+    </div>
+  );
+};
+
+const ChattingRoom = ({ newChat, onClickChatStart }) => {
+  return (
+    <div className="chatting-container">
+      <div className="chatting-content-container" id="scroll-style">
+        {newChat ? (
+          <div className="d-flex h-100 justify-content-center align-items-center">
+            <button
+              className="btn btn-danger follow-btn"
+              onClick={() => {
+                onClickChatStart();
+              }}
+            >
+              Start Chatting
+            </button>
+          </div>
+        ) : (
+          <div>You Made it</div>
+        )}
+      </div>
+      <div className="chatting-input-container">
+        <div className="d-flex justify-content-center align-items-center mx-2">
+          <input className="form-control" />
+          <button
+            className="btn btn-success follow-btn ms-3"
+            disabled={newChat == true}
+          >
+            Send
+          </button>
+        </div>
+      </div>
     </div>
   );
 };
@@ -134,8 +216,10 @@ const ProfileHeader = ({
   profile,
   id,
   follow,
+  chatMode,
   onClickFollow,
   onClickUnFollow,
+  setChatMode,
 }) => {
   return (
     <div className="d-flex">
@@ -150,25 +234,35 @@ const ProfileHeader = ({
         <div>
           {user._id !== id && (
             <>
-              {follow ? (
+              <div className="d-flex">
                 <button
-                  className="btn btn-danger follow-btn"
+                  className="btn btn-success follow-btn me-2"
                   onClick={() => {
-                    onClickUnFollow();
+                    setChatMode(!chatMode);
                   }}
                 >
-                  Unfollow
+                  Chat
                 </button>
-              ) : (
-                <button
-                  className="btn btn-danger follow-btn"
-                  onClick={() => {
-                    onClickFollow();
-                  }}
-                >
-                  Follow
-                </button>
-              )}
+                {follow ? (
+                  <button
+                    className="btn btn-danger follow-btn"
+                    onClick={() => {
+                      onClickUnFollow();
+                    }}
+                  >
+                    Unfollow
+                  </button>
+                ) : (
+                  <button
+                    className="btn btn-danger follow-btn"
+                    onClick={() => {
+                      onClickFollow();
+                    }}
+                  >
+                    Follow
+                  </button>
+                )}
+              </div>
             </>
           )}
         </div>
