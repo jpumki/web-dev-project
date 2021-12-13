@@ -150,6 +150,9 @@
   margin-right: 5px;
   border-radius: 10px 10px 0px 10px;
   width: fit-content;
+  font-size: 15px;
+  font-weight: 600;
+
 }
 .receiving-chat {
   background-color: gray;
@@ -159,4 +162,7 @@
   margin-left: 5px;
   border-radius: 10px 10px 10px 0px;
   width: fit-content;
+  font-size: 15px;
+  font-weight: 600;
+ 
 }
