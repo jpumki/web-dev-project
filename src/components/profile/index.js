@@ -576,7 +576,7 @@ const ProfileDetail = ({ profile, user, id }) => {
           </Modal.Header>
           <Modal.Body>
             <div className="row">
-              <div className="d-flex align-items-center col-6 mb-3">
+              <div className="d-flex align-items-center col-6">
                 <div className="edit-label me-2">Name</div>
                 <input
                   className="form-control"
