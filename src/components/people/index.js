@@ -43,7 +43,7 @@ const People = ({ auth }) => {
 
   return (
     <div className="people-container">
-      <div className=" section-title">Connect with others</div>
+      <div className=" section-title">Connect to Your Neighbors</div>
       {init && (
         <div>
           <div className="section-grid mt-0">
