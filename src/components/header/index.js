@@ -71,7 +71,7 @@ const Header = ({ auth }) => {
         {!isLoggin ? (
           <div className="w-100 d-flex align-items-center justify-content-end ">
             <Link className="header-link " to="/login">
-              <button className="mx-3 btn btn-danger d-flex align-items-center justify-content-center cursor-pointer">
+              <button className="fw-bold mx-3 btn btn-danger d-flex align-items-center justify-content-center cursor-pointer">
                 Sign In
               </button>
             </Link>

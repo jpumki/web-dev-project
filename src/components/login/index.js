@@ -29,7 +29,7 @@ const Login = ({ auth }) => {
       />
       <div className="signin-container">
         {isLoggin ? (
-          <div className="text-center">Redirecting ...</div>
+          <div className="text-center redirection-text">Redirecting ...</div>
         ) : (
           <SignIn auth={auth} />
         )}

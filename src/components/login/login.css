@@ -5,6 +5,10 @@
   padding: 50px;
 }
 
+.redirection-text {
+  font-weight: 600;
+  font-size: 15px;
+}
 .login-backdrop {
   position: absolute;
   top: 0;
