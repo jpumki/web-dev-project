@@ -591,7 +591,7 @@ const ProfileDetail = ({ profile, user, id }) => {
               <div className="d-flex align-items-center  col-6">
                 <div className="edit-label me-2">Role</div>
                 <select
-                  className="form-control"
+                  className="form-control cursor-pointer"
                   name="role"
                   onChange={onChange}
                 >
