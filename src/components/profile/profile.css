@@ -140,6 +140,9 @@
 }
 .chatting-content-container {
   overflow-y: scroll;
+  overflow: auto;
+  display: flex;
+  flex-direction: column-reverse ;
   height: 91%;
 }
 .sending-chat {
