@@ -19,7 +19,7 @@ const Header = ({ auth }) => {
 
   const navTabs = [
     { key: "home", link: "/" },
-    { key: "people", link: "/people" },
+    { key: "residents", link: "/people" },
     { key: "search", link: "/search" },
   ];
 
