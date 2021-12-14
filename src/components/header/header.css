@@ -42,9 +42,13 @@ button {
   font-weight: bold;
   font-size: 21px;
   font-family: Georgia, 'Times New Roman', Times, serif;
+  transition: 0.5s;
 
 }
 
+.header-main-title:hover {
+  transform: translateY(-3px);
+}
 .header-link {
   height: 50px;
   display: flex;

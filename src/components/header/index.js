@@ -51,8 +51,16 @@ const Header = ({ auth }) => {
     <header>
       <ul className="d-flex w-100">
         <li className="header-main-title text-capitalize mx-2">
-          <img className="me-2" src={trailer} width="45px" height="45px"/>
-          Trailer Park
+          <Link
+            onClick={(e) => {
+              onTabClick("home");
+            }}
+            className="w-100 d-flex"
+            to={"/"}
+          >
+            <img className="me-2" src={trailer} width="45px" height="45px" />
+            Trailer Park
+          </Link>
         </li>
         {navTabs.map((elem) => {
           return (
