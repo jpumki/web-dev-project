@@ -33,6 +33,18 @@ button {
     ${(props) => (props.current ? "#c0392b" : "transparent")}; */
   transition: border-bottom 0.5s ease-in-out;
 }
+.header-main-title  {
+  width: 150px;
+  height: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 21px;
+  font-family: Georgia, 'Times New Roman', Times, serif;
+
+}
+
 .header-link {
   height: 50px;
   display: flex;

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import "./header.css";
+import trailer from "../../assets/trailer.png";
 
 const Header = ({ auth }) => {
   const [isLoggin, setIsLoggin] = useState(false);
@@ -49,6 +50,10 @@ const Header = ({ auth }) => {
   return (
     <header>
       <ul className="d-flex w-100">
+        <li className="header-main-title text-capitalize mx-2">
+          <img className="me-2" src={trailer} width="45px" height="45px"/>
+          Trailer Park
+        </li>
         {navTabs.map((elem) => {
           return (
             <li className="cursor-pointer mx-2 ">
