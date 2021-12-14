@@ -22,6 +22,8 @@ const Profile = ({ auth }) => {
   const [text, setText] = useState("");
   const { id } = useParams();
 
+  const [face, setFace] = useState(<BigHead {...getRandomOptions()} />);
+
   const findProfileById = (id, uid) => {
     service.findProfileById(id).then((profile) => {
       if (profile === null) {
@@ -161,6 +163,7 @@ const Profile = ({ auth }) => {
         <div>
           <div>
             <ProfileHeader
+              face={face}
               user={user}
               profile={profile}
               id={id}
@@ -183,7 +186,7 @@ const Profile = ({ auth }) => {
           ) : (
             <div className="mt-4">
               <ChattingRoom
-                  user={user}
+                user={user}
                 chatData={chatData}
                 onClickChatStart={onClickChatStart}
                 onClickSendChat={onClickSendChat}
@@ -206,7 +209,7 @@ const ChattingRoom = ({
   onClickSendChat,
   text,
   setText,
-  user
+  user,
 }) => {
   return (
     <div className="chatting-container">
@@ -274,6 +277,7 @@ const ChattingRoom = ({
 };
 
 const ProfileHeader = ({
+  face,
   user,
   profile,
   id,
@@ -285,9 +289,7 @@ const ProfileHeader = ({
 }) => {
   return (
     <div className="d-flex">
-      <div className="profile-avatar">
-        <BigHead {...getRandomOptions()} />
-      </div>
+      <div className="profile-avatar">{face}</div>
       <div className="d-flex align-items-baseline flex-column justify-content-end">
         <span className="profile-name fw-bold mb-1">{profile.name}</span>
         <div className="profile-year mb-2">
