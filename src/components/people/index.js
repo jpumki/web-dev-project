@@ -34,7 +34,7 @@ const People = ({ auth }) => {
     } else {
       Swal.fire({
         icon: "error",
-        title: "You need to login to see profile",
+        title: "You need to login to see resident's profile!!",
       }).then(() => {
         window.location.href = "/login";
       });
