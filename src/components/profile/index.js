@@ -253,23 +253,25 @@ const ChattingRoom = ({
       </div>
       <div className="chatting-input-container">
         <div className="d-flex justify-content-center align-items-center mx-2">
-          <input
-            className="form-control"
-            placeholder="Type your message"
-            value={text}
-            onChange={(e) => {
-              setText(e.target.value);
-            }}
-          />
-          <button
-            className="btn btn-success follow-btn ms-3"
-            disabled={newChat == true || text == ""}
-            onClick={() => {
-              onClickSendChat();
-            }}
-          >
-            Send
-          </button>
+          <form className="w-100 d-flex">
+            <input
+              className="form-control"
+              placeholder="Type your message"
+              value={text}
+              onChange={(e) => {
+                setText(e.target.value);
+              }}
+            />
+            <button
+              className="btn btn-success follow-btn ms-3"
+              disabled={newChat == true || text == ""}
+              onClick={() => {
+                onClickSendChat();
+              }}
+            >
+              Send
+            </button>
+          </form>
         </div>
       </div>
     </div>
